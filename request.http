@@ -1,0 +1,44 @@
+GET http://localhost:8080/api/room/6c5e280b5ce1cb4f82
+###
+GET http://localhost:8080/api/rooms
+### 
+POST  http://localhost:8080/api/room
+Content-Type: application/json
+
+{
+    "RoomName": "phòng a2"
+}
+### 
+PUT   http://localhost:8080/api/room
+Content-Type: application/json
+
+{
+    "roomId": "6c5e280b5ce1cb4f82",
+    "RoomName": "phòng a3"
+}
+###
+DELETE  http://localhost:8080/api/room/6c5e280b5ce1cb4f82
+###########################################################
+GET http://localhost:8080/api/driver/7GGM8
+###
+GET http://localhost:8080/api/drivers
+### 
+POST  http://localhost:8080/api/driver
+Content-Type: application/json
+
+{
+    "driverName": "thiết bị 1",
+    "roomId": null
+}
+### 
+PUT   http://localhost:8080/api/driver
+Content-Type: application/json
+
+{
+   "driverId": "5IKb0",
+    "driverName": "thiết bị 2",
+     "roomId": null
+}
+###
+DELETE  http://localhost:8080/api/driver/7GGM8
+###########################################################
