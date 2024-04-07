@@ -2,19 +2,19 @@ const { DataTypes } = require('sequelize');
 const db = require('../config/Database');
 
 
-const Room = db.define('Room', {
-    roomId: {
+const ClassRoom = db.define('ClassRoom', {
+    classRoomId: {
         type: DataTypes.STRING(20),
         primaryKey: true,
-        field: 'room_id'
+        field: 'class_room_id'
     },
-    RoomName: {
+    name: {
         type: DataTypes.STRING(20),
-        field: 'Room_name'
+        field: 'name'
     }
 }, {
-    tableName: 'room',
+    tableName: 'class_room',
     timestamps: false
 });
 
-module.exports = Room;
+module.exports = ClassRoom;

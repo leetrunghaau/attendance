@@ -4,15 +4,11 @@ const DriverService = require("../services/driver-serive");
 
 class AttendanceController {
     // user role
-    static async getDriverById(req, res, next) {
+    static async checkIn(req, res, next) {
         try {
-            const driver = await DriverService.getDriverById(req.params.driverId);
+            const driver = await DriverService.getDriverById(req.body.driverId);
             if (!driver) {
-                return res.status(200).json({
-                    status: 204,
-                    message: `Không tìm được Driver với id là ${req.params.driverId}`,
-                    data: null
-                })
+                return next(createError.BadRequest(`Không tìm được Driver với id là ${req.body.driverId}`));
             }
             return res.status(200).json({
                 status: 200,

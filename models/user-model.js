@@ -13,6 +13,7 @@ const User = db.define('User', {
     field:"user_name"
   },
   email: DataTypes.STRING(50),
+  phone: DataTypes.STRING(15),
   name: {
     type: DataTypes.STRING(50),
     field: 'name'

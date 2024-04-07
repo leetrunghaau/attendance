@@ -7,9 +7,7 @@ class DriverService {
   static async getDriverById(driverId) {
     return Driver.findByPk(driverId);
   }
-  static async getDriverByCode(driverCode) {
-    return Driver.findOne({ where: { driverCode: driverCode } });
-  }
+  
   static async getAllDriver() {
     return Driver.findAll();
   }

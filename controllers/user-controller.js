@@ -8,11 +8,9 @@ class UserController {
         try {
             const user = await UserService.getUserById(req.params.userId);
             if (!user) {
-                return res.status(200).json({
-                    status: 204,
-                    message: `Không tìm được User với id là ${req.params.userId}`,
-                    data: null
-                })
+                
+                return next(createError.BadRequest(`Không tìm được User với id là ${req.params.userId}`));
+
             }
             return res.status(200).json({
                 status: 200,
@@ -28,11 +26,9 @@ class UserController {
         try {
             const users = await UserService.getAllUser();
             if (!users) {
-                return res.status(204).json({
-                    status: 204,
-                    message: `Không tìm được User`,
-                    data: null
-                })
+                
+                return next(createError.BadRequest(`Không tìm được User`));
+
             }
             return res.status(200).json({
                 status: 200,

@@ -1,77 +1,72 @@
 const createError = require('http-errors');
 const { hashPassword } = require("../helpers/password-crypt");
-const RoomService = require("../services/room-service");
+const ScheduleService = require("../services/schedule-service");
 
-class RoomController {
+class ScheduleController {
     // user role
-    static async getRoomById(req, res, next) {
+    static async getScheduleById(req, res, next) {
         try {
-            const room = await RoomService.getRoomById(req.params.roomId);
-            if (!room) {
-                return res.status(200).json({
-                    status: 204,
-                    message: `Không tìm được Room với id là ${req.params.roomId}`,
-                    data: null
-                })
+            const Schedule = await ScheduleService.getScheduleById(req.params.scheduleId);
+            if (!Schedule) {
+                return next(createError.BadRequest(`Không tìm được Schedule với id là ${req.params.scheduleId}`))
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: room
+                data: Schedule
             })
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async getAllRoom(req, res, next) {
+    
+    static async getAllSchedule(req, res, next) {
         try {
-            const rooms = await RoomService.getAllRoom();
-            if (!rooms) {
-                return res.status(204).json({
-                    status: 204,
-                    message: `Không tìm được Room`,
-                    data: null
-                })
+            const Schedules = await ScheduleService.getAllSchedule();
+            if (!Schedules) {
+                
+                return next(createError.BadRequest(`Không tìm được Schedule`));
+
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: rooms
+                data: Schedules
             })
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async createRoom(req, res, next) {
+    static async createSchedule(req, res, next) {
         try {
-            const room = await RoomService.createRoom(req.body);
-            if (!room) {
+            const Schedule = await ScheduleService.createSchedule(req.body);
+            if (!Schedule) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: room
+                data: Schedule
             });
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async updateRoom(req, res, next) {
+    static async updateSchedule(req, res, next) {
         try {
 
-            const { roomId, ...value } = req.body
-            const room = await RoomService.updateRoom(roomId, value);
-            if (!room) {
+            const { scheduleId, ...value } = req.body
+            const Schedule = await ScheduleService.updateSchedule(scheduleId, value);
+            if (!Schedule) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: 'done',
-                data: room,
+                data: Schedule,
 
             })
         } catch (error) {
@@ -79,11 +74,11 @@ class RoomController {
             return next(createError.InternalServerError());
         }
     }
-    static async deleteRoomById(req, res, next) {
+    static async deleteScheduleById(req, res, next) {
         try {
-            console.log(req.params.roomId)
-            const room = await RoomService.deleteRoomById(req.params.roomId);
-            if (room <= 0) {
+            console.log(req.params.scheduleId)
+            const Schedule = await ScheduleService.deleteScheduleById(req.params.scheduleId);
+            if (Schedule <= 0) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
@@ -98,4 +93,4 @@ class RoomController {
 
 }
 
-module.exports = RoomController;
+module.exports = ScheduleController;

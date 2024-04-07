@@ -8,11 +8,8 @@ class DriverController {
         try {
             const driver = await DriverService.getDriverById(req.params.driverId);
             if (!driver) {
-                return res.status(200).json({
-                    status: 204,
-                    message: `Không tìm được Driver với id là ${req.params.driverId}`,
-                    data: null
-                })
+                return next(createError.BadRequest(`Không tìm được Driver với id là ${req.params.driverId}`));
+
             }
             return res.status(200).json({
                 status: 200,
@@ -28,11 +25,9 @@ class DriverController {
         try {
             const drivers = await DriverService.getAllDriver();
             if (!drivers) {
-                return res.status(204).json({
-                    status: 204,
-                    message: `Không tìm được Driver`,
-                    data: null
-                })
+              
+                return next(createError.BadRequest(`Không tìm được Driver`));
+
             }
             return res.status(200).json({
                 status: 200,

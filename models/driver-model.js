@@ -1,6 +1,6 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/Database');
-const Room = require('./room-model');
+const Room = require('./class-room-model');
 
 
 const Driver = db.define('Driver', {
@@ -20,7 +20,8 @@ const Driver = db.define('Driver', {
     }
 }, {
     tableName: 'driver',
-    timestamps: false
+    timestamps: false,
+    comment:""
 });
 Driver.belongsTo(Room, { foreignKey: "roomId", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 module.exports = Driver;

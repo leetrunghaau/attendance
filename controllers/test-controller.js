@@ -1,23 +1,29 @@
 const createError = require('http-errors');
 const { hashPassword } = require("../helpers/password-crypt");
-const ScheduleUserService = require('../services/schedule-user-service');
+const ClassRoomUserService = require('../services/class-room-user-service');
 const DriverService = require('../services/driver-serive');
-const SessionService = require('../services/serison-service');
 const UserService = require('../services/user-service');
 const ScheduleService = require('../services/schedule-service');
-const RoomService = require('../services/room-service');
+const ClassRoomService = require('../services/class_room-service');
+const AttendanceService = require('../services/attendance-service');
+const ScheduleItemService = require('../services/schedule-item-service');
+const LessonService = require('../services/lesson-service');
 
 
 class TestController {
 
     static async testCT(req, res, next) {
         try {
-            const e = await ScheduleUserService.getAllCourseUser();
+            const e = await ClassRoomUserService.getAllClassRoomUser();
             const r = await DriverService.getAllDriver();
-            const t = await SessionService.getAllSession();
             const y = await UserService.getAllUser();
             const a = await ScheduleService.getAllSchedule();
-            const f = await RoomService.getAllRoom();
+            const f = await ClassRoomService.getAllClassRoom();
+            const g = await AttendanceService.getAllAttendance();
+            const b = await ScheduleItemService.getAllAttendanceItem();
+            const h = await LessonService.getAllLesson();
+
+
             return res.status(200).json({
                 status: 200,
                 message: "done",

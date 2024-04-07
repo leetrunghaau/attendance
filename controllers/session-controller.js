@@ -1,77 +1,73 @@
 const createError = require('http-errors');
 const { hashPassword } = require("../helpers/password-crypt");
-const CourseUserService = require("../services/schedule-user-service");
+const SessionService = require("../services/session-service");
 
-class CourseUserController {
+class SessionController {
     // user role
-    static async getCourseUserById(req, res, next) {
+    static async getSessionById(req, res, next) {
         try {
-            const courseUser = await CourseUserService.getCourseUserById(req.params.courseUserId);
-            if (!courseUser) {
-                return res.status(200).json({
-                    status: 204,
-                    message: `Không tìm được CourseUser với id là ${req.params.courseUserId}`,
-                    data: null
-                })
+            const Session = await SessionService.getSessionById(req.params.sessionId);
+            if (!Session) {
+               
+                return next(createError.BadRequest(`Không tìm được Session với id là ${req.params.sessionId}`));
+
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: courseUser
+                data: Session
             })
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async getAllCourseUser(req, res, next) {
+    static async getAllSession(req, res, next) {
         try {
-            const courseUsers = await CourseUserService.getAllCourseUser();
-            if (!courseUsers) {
-                return res.status(204).json({
-                    status: 204,
-                    message: `Không tìm được CourseUser`,
-                    data: null
-                })
+            const Sessions = await SessionService.getAllSession();
+            if (!Sessions) {
+                
+                return next(createError.BadRequest(`Không tìm được Session`));
+
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: courseUsers
+                data: Sessions
             })
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async createCourseUser(req, res, next) {
+    static async createSession(req, res, next) {
         try {
-            const courseUser = await CourseUserService.createCourseUser(req.body);
-            if (!courseUser) {
+            const Session = await SessionService.createSession(req.body);
+            if (!Session) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: courseUser
+                data: Session
             });
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async updateCourseUser(req, res, next) {
+    static async updateSession(req, res, next) {
         try {
 
-            const { courseUserId, ...value } = req.body
-            const courseUser = await CourseUserService.updateCourseUser(courseUserId, value);
-            if (!courseUser) {
+            const { sessionId, ...value } = req.body
+            const Session = await SessionService.updateSession(sessionId, value);
+            if (!Session) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: 'done',
-                data: courseUser,
+                data: Session,
 
             })
         } catch (error) {
@@ -79,17 +75,16 @@ class CourseUserController {
             return next(createError.InternalServerError());
         }
     }
-    static async deleteCourseUserById(req, res, next) {
+    static async deleteSessionById(req, res, next) {
         try {
-            console.log(req.params.courseUserId)
-            const courseUser = await CourseUserService.deleteCourseUserById(req.params.courseUserId);
-            if (courseUser <= 0) {
+            console.log(req.params.sessionId)
+            const Session = await SessionService.deleteSessionById(req.params.sessionId);
+            if (Session <= 0) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: 'done',
-                data: courseUser
             })
         } catch (error) {
             console.log(error);
@@ -99,4 +94,4 @@ class CourseUserController {
 
 }
 
-module.exports = CourseUserController;
+module.exports = SessionController;

@@ -1,21 +1,21 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/Database');
-const Room = require('./room-model');
+const ClassRoom = require('./class-room-model');
 
 
 const Schedule = db.define('Schedule', {
-    ScheduleId: {
+    scheduleId: {
         type: DataTypes.STRING(20),
         primaryKey: true,
         field: 'schedule_id'
     },
-    subject: {
+    name: {
         type: DataTypes.STRING(50),
-        field: "subject"
+        field: "name"
     },
-    roomId: {
+    classRoomId: {
         type: DataTypes.STRING(50),
-        field: "room_id"
+        field: "class_room_id"
     },
     timeStart: {
         type: DataTypes.TIME,
@@ -25,15 +25,23 @@ const Schedule = db.define('Schedule', {
         type: DataTypes.TIME,
         field: "time_end"
     },
+    applyStart: {
+        type: DataTypes.DATEONLY,
+        field: "apply_start"
+    },
+    applyEnd: {
+        type: DataTypes.DATEONLY,
+        field: "apply_end"
+    },
     dayOfWeek: {
-
-        type: DataTypes.INTEGER,
+        type: DataTypes.TINYINT,
         field: "day_of_week"
     },
 }, {
     tableName: 'schedule',
-    timestamps: false
+    timestamps: false,
+    comment:"thời khóa biểu của 1 buổi của 1 lớp"
 });
 
-Schedule.belongsTo(Room, { foreignKey: "roomId", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Schedule.belongsTo(ClassRoom, { foreignKey: "classRoomId", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 module.exports = Schedule;
