@@ -1,0 +1,4 @@
+export const LOADING_CONST = {
+    LOADING_SHOW:'LOADING_SHOW',
+    LOADING_HIDE: 'LOADING_HIDE',
+};
