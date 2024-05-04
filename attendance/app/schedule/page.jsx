@@ -364,7 +364,7 @@ export default function SchedulePage() {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">{isNewItem ? "Thêm lớp mới" : "Chỉnh sửa lớp học"}</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">{isNewItem ? "Thêm thời khóa biểu mới" : "Chỉnh sửa thời khóa biểu"}</ModalHeader>
                             <ModalBody>
                                 <Input
                                     autoFocus
