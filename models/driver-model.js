@@ -13,15 +13,15 @@ const Driver = db.define('Driver', {
         type: DataTypes.STRING(20),
         field: 'driver_name'
     },
-
-    roomId: {
+    classRoomId: {
         type: DataTypes.STRING(20),
-        field: "room_id"
+        field: "class_room_id"
     }
 }, {
     tableName: 'driver',
     timestamps: false,
     comment:""
 });
-Driver.belongsTo(Room, { foreignKey: "roomId", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
+Driver.belongsTo(Room, { foreignKey: "classRoomId", onDelete: 'CASCADE', onUpdate: 'CASCADE' });
 module.exports = Driver;
+

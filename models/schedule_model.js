@@ -9,21 +9,9 @@ const Schedule = db.define('Schedule', {
         primaryKey: true,
         field: 'schedule_id'
     },
-    name: {
-        type: DataTypes.STRING(50),
-        field: "name"
-    },
     classRoomId: {
-        type: DataTypes.STRING(50),
+        type: DataTypes.STRING(20),
         field: "class_room_id"
-    },
-    timeStart: {
-        type: DataTypes.TIME,
-        field: "time_start"
-    },
-    timeEnd: {
-        type: DataTypes.TIME,
-        field: "time_end"
     },
     applyStart: {
         type: DataTypes.DATEONLY,
@@ -32,10 +20,6 @@ const Schedule = db.define('Schedule', {
     applyEnd: {
         type: DataTypes.DATEONLY,
         field: "apply_end"
-    },
-    dayOfWeek: {
-        type: DataTypes.TINYINT,
-        field: "day_of_week"
     },
 }, {
     tableName: 'schedule',

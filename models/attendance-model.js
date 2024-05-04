@@ -1,7 +1,8 @@
 const { DataTypes } = require('sequelize');
 const db = require('../config/Database');
-const User = require('./user-model');
-const ClassRoom = require('./class-room-model');
+const Student = require('./student-model');
+const Lesson = require('./lesson-model');
+
 
 
 const Attendance = db.define('Attendance', {
@@ -10,28 +11,32 @@ const Attendance = db.define('Attendance', {
         primaryKey: true,
         field: 'attendance_id'
     },
-    classRoomId: {
+    studentId: {
         type: DataTypes.STRING(20),
-        field: "class_room_id"
+        field: "student_id"
     },
-    userId: {
+    lessonId: {
         type: DataTypes.STRING(20),
-        field: "user_id"
+        field: "lesson_id"
     },
-    checkinTime:{
+    checkinTime: {
         type: DataTypes.DATE,
-        field:"checkin_Time"
+        field: "checkin_Time"
     },
-    checkoutTime:{
+    checkoutTime: {
         type: DataTypes.DATE,
-        field:"checkout_Time"
+        field: "checkout_Time"
     },
-    state:DataTypes.STRING(50)
+    description: {
+        type: DataTypes.STRING(100),
+        field: "description"
+    }
+
 }, {
     tableName: 'attendance',
     timestamps: false
 });
-Attendance.belongsTo(User, { foreignKey: 'userId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
-Attendance.belongsTo(ClassRoom, { foreignKey: 'classRoomId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+Attendance.belongsTo(Student, { foreignKey: 'studentId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+Attendance.belongsTo(Lesson, { foreignKey: 'lessonId', onDelete: 'CASCADE', onUpdate: 'CASCADE' })
 
 module.exports = Attendance;

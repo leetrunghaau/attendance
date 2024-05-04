@@ -14,7 +14,12 @@ class LessonService {
     lessonData.lessonId = generateId();
     return Lesson.create(lessonData);
   }
-
+  static async createMultipleLessons(lessonDataArray) {
+    const generatedIds = lessonDataArray.map(data => {
+      return { ...data, lessonId: generateId() };
+    });
+    return Lesson.bulkCreate(generatedIds);
+  }
   static async updateLesson(lessonId, lessonData) {
     await Lesson.update(lessonData, {
       where: { lessonId: lessonId },

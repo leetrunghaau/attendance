@@ -11,10 +11,10 @@ app.use(express.json());
 
 // Routes
 const apiRoutes = require('./routes/index');
-// const { errorMiddleware } = require('./middlewares/error-middleweara');
+const { errorMiddleware } = require('./middlewares/error-middleweara');
 app.use('/api',cors() , apiRoutes);
 // Error handling middleware
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 
 
 // Start the server

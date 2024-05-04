@@ -8,9 +8,9 @@ const ClassRoom = db.define('ClassRoom', {
         primaryKey: true,
         field: 'class_room_id'
     },
-    name: {
+    classRoomName: {
         type: DataTypes.STRING(20),
-        field: 'name'
+        field: 'class_room_name'
     }
 }, {
     tableName: 'class_room',

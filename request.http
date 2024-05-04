@@ -1,44 +1,121 @@
-GET http://localhost:8080/api/room/6c5e280b5ce1cb4f82
-###
-GET http://localhost:8080/api/rooms
-### 
-POST  http://localhost:8080/api/room
+
+#### api này dùng để innit dử liệu tiết học nên  không dùng
+POST http://localhost:8080/api/lessons
+Content-Type: application/json
+
+[
+    {
+        "lessonName":"Tiết 1",
+        "timeStart":"07:15:00",
+        "timeEnd":"08:00:00",
+        "active":true
+    },
+    {
+        "lessonName":"Tiết 2",
+        "timeStart":"08:05:00",
+        "timeEnd":"08:50:00",
+        "active":true
+    },
+    {
+        "lessonName":"Tiết 3",
+        "timeStart":"09:00:00",
+        "timeEnd":"09:45:00",
+        "active":true
+    },
+    {
+        "lessonName":"Tiết 4",
+        "timeStart":"09:50:00",
+        "timeEnd":"10:35:00",
+        "active":true
+    },
+    {
+        "lessonName":"Tiết 5",
+        "timeStart":"10:40:00",
+        "timeEnd":"11:25:00",
+        "active":true
+    },
+    {
+        "lessonName":"Tiết 6",
+        "timeStart":"12:50:00",
+        "timeEnd":"13:35:00",
+        "active":true
+    },
+    {
+        "lessonName":"Tiết 7",
+        "timeStart":"13:40:00",
+        "timeEnd":"14:25:00",
+        "active":true
+    },
+    {
+        "lessonName":"Tiết 8",
+        "timeStart":"14:35:00",
+        "timeEnd":"15:20:00",
+        "active":true
+    },
+    {
+        "lessonName":"Tiết 9",
+        "timeStart":"15:25:00",
+        "timeEnd":"16:10:00",
+        "active":true
+    },
+    {
+        "lessonName":"Tiết 10",
+        "timeStart":"16:15:00",
+        "timeEnd":"17:00:00",
+        "active":true
+    }
+]
+
+
+# các api cho driver sử dụng
+#########################################################
+POST http://localhost:8080/api/studentAttendenceCheckin
 Content-Type: application/json
 
 {
-    "RoomName": "phòng a2"
+    "studentId":"a906ddd636385340f4",
+    "driverId":"Kh0sf"
+
 }
-### 
-PUT   http://localhost:8080/api/room
+#########################################################
+POST http://localhost:8080/api/studentAttendenceCheckout
 Content-Type: application/json
 
 {
-    "roomId": "6c5e280b5ce1cb4f82",
-    "RoomName": "phòng a3"
+    "studentId":"a906ddd636385340f4",
+    "driverId":"Kh0sf"
+
 }
-###
-DELETE  http://localhost:8080/api/room/6c5e280b5ce1cb4f82
-###########################################################
-GET http://localhost:8080/api/driver/7GGM8
-###
-GET http://localhost:8080/api/drivers
-### 
-POST  http://localhost:8080/api/driver
+#########################################################
+POST http://localhost:8080/api/teacherAttendenceCheckin
 Content-Type: application/json
 
 {
-    "driverName": "thiết bị 1",
-    "roomId": null
+    "teacherId":"MnB19",
+    "driverId":"Kh0sf"
+
 }
-### 
-PUT   http://localhost:8080/api/driver
+#########################################################
+POST http://localhost:8080/api/teacherAttendenceCheckin
 Content-Type: application/json
 
 {
-   "driverId": "5IKb0",
-    "driverName": "thiết bị 2",
-     "roomId": null
+    "teacherId":"MnB19",
+    "driverId":"Kh0sf"
+
 }
-###
-DELETE  http://localhost:8080/api/driver/7GGM8
-###########################################################
+
+#########################################################
+// các api để test 
+//Thêm test vào vị trí /api/test/....
+//Thiêm thuộc tính currentTime vào khi gọi api
+//ví dụ 
+POST http://localhost:8080/api/test/teacherAttendenceCheckin
+Content-Type: application/json
+
+{
+    "teacherId":"MnB19",
+    "driverId":"Kh0sf",
+    "currentTime": "09:15:25"
+
+}

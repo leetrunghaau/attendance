@@ -7,9 +7,9 @@ const Lesson = db.define('Lesson', {
         primaryKey: true,
         field: 'lesson_id'
     },
-    name: {
+    lessonName: {
         type: DataTypes.STRING(50),
-        field: 'name'
+        field: 'lesson_name'
     },
     timeStart: {
         type: DataTypes.TIME,

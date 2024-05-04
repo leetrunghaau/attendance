@@ -1,6 +1,6 @@
 const createError = require('http-errors');
 const { hashPassword } = require("../helpers/password-crypt");
-const DriverService = require("../services/driver-serive");
+const DriverService = require("../services/driver-service");
 
 class DriverController {
     // user role

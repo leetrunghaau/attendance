@@ -8,7 +8,8 @@ class ScheduleController {
         try {
             const Schedule = await ScheduleService.getScheduleById(req.params.scheduleId);
             if (!Schedule) {
-                return next(createError.BadRequest(`Không tìm được Schedule với id là ${req.params.scheduleId}`))
+                return next(createError.BadRequest(`Không tìm được Schedule với id là ${req.params.scheduleId}`));
+
             }
             return res.status(200).json({
                 status: 200,
@@ -20,12 +21,29 @@ class ScheduleController {
             return next(createError.InternalServerError());
         }
     }
-    
     static async getAllSchedule(req, res, next) {
         try {
             const Schedules = await ScheduleService.getAllSchedule();
             if (!Schedules) {
-                
+              
+                return next(createError.BadRequest(`Không tìm được Schedule`));
+
+            }
+            return res.status(200).json({
+                status: 200,
+                message: "done",
+                data: Schedules
+            })
+        } catch (error) {
+            console.log(error);
+            return next(createError.InternalServerError());
+        }
+    }
+    static async getAllScheduleByClassRoomId(req, res, next) {
+        try {
+            const Schedules = await ScheduleService.getAllScheduleByClassRoomId(req.params.classRoomId);
+            if (!Schedules) {
+              
                 return next(createError.BadRequest(`Không tìm được Schedule`));
 
             }

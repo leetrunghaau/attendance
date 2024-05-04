@@ -1,73 +1,72 @@
 const createError = require('http-errors');
 const { hashPassword } = require("../helpers/password-crypt");
-const SessionService = require("../services/session-service");
+const ClassRoomService = require("../services/class-room-service");
 
-class SessionController {
+class ClassRoomController {
     // user role
-    static async getSessionById(req, res, next) {
+    static async getClassRoomById(req, res, next) {
         try {
-            const Session = await SessionService.getSessionById(req.params.sessionId);
-            if (!Session) {
-               
-                return next(createError.BadRequest(`Không tìm được Session với id là ${req.params.sessionId}`));
+            const ClassRoom = await ClassRoomService.getClassRoomById(req.params.classRoomId);
+            if (!ClassRoom) {
+                return next(createError.BadRequest(`Không tìm được ClassRoom với id là ${req.params.classRoomId}`));
 
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: Session
+                data: ClassRoom
             })
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async getAllSession(req, res, next) {
+    static async getAllClassRoom(req, res, next) {
         try {
-            const Sessions = await SessionService.getAllSession();
-            if (!Sessions) {
-                
-                return next(createError.BadRequest(`Không tìm được Session`));
+            const ClassRooms = await ClassRoomService.getAllClassRoom();
+            if (!ClassRooms) {
+              
+                return next(createError.BadRequest(`Không tìm được ClassRoom`));
 
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: Sessions
+                data: ClassRooms
             })
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async createSession(req, res, next) {
+    static async createClassRoom(req, res, next) {
         try {
-            const Session = await SessionService.createSession(req.body);
-            if (!Session) {
+            const ClassRoom = await ClassRoomService.createClassRoom(req.body);
+            if (!ClassRoom) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: Session
+                data: ClassRoom
             });
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async updateSession(req, res, next) {
+    static async updateClassRoom(req, res, next) {
         try {
 
-            const { sessionId, ...value } = req.body
-            const Session = await SessionService.updateSession(sessionId, value);
-            if (!Session) {
+            const { classRoomId, ...value } = req.body
+            const ClassRoom = await ClassRoomService.updateClassRoom(classRoomId, value);
+            if (!ClassRoom) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: 'done',
-                data: Session,
+                data: ClassRoom,
 
             })
         } catch (error) {
@@ -75,11 +74,11 @@ class SessionController {
             return next(createError.InternalServerError());
         }
     }
-    static async deleteSessionById(req, res, next) {
+    static async deleteClassRoomById(req, res, next) {
         try {
-            console.log(req.params.sessionId)
-            const Session = await SessionService.deleteSessionById(req.params.sessionId);
-            if (Session <= 0) {
+            console.log(req.params.classRoomId)
+            const ClassRoom = await ClassRoomService.deleteClassRoomById(req.params.classRoomId);
+            if (ClassRoom <= 0) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
@@ -94,4 +93,4 @@ class SessionController {
 
 }
 
-module.exports = SessionController;
+module.exports = ClassRoomController;

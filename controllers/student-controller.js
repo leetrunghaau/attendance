@@ -1,73 +1,78 @@
 const createError = require('http-errors');
 const { hashPassword } = require("../helpers/password-crypt");
-const UserService = require("../services/user-service");
+const StudentService = require("../services/student-service");
 
-class UserController {
+class StudentController {
     // user role
-    static async getUserById(req, res, next) {
+    static async getStudentByClassRoomId(req, res, next) {
         try {
-            const user = await UserService.getUserById(req.params.userId);
-            if (!user) {
-                
-                return next(createError.BadRequest(`Không tìm được User với id là ${req.params.userId}`));
+            let Student;
+            if (req.params.classRoomId == "all") {
+
+                Student = await StudentService.getAllStudent();
+            } else {
+                Student = await StudentService.getStudentByClassRoomId(req.params.classRoomId);
+            }
+            if (!Student) {
+                return next(createError.BadRequest(`Không tìm được Student với id là ${req.params.classRoomId}`));
 
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: user
+                data: Student
             })
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async getAllUser(req, res, next) {
+    static async getAllStudent(req, res, next) {
         try {
-            const users = await UserService.getAllUser();
-            if (!users) {
-                
-                return next(createError.BadRequest(`Không tìm được User`));
+            const Students = await StudentService.getAllStudent();
+            if (!Students) {
+
+                return next(createError.BadRequest(`Không tìm được Student`));
 
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: users
+                data: Students
             })
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async createUser(req, res, next) {
+    static async createStudent(req, res, next) {
         try {
-            const user = await UserService.createUser(req.body);
-            if (!user) {
+            const Student = await StudentService.createStudent(req.body);
+            if (!Student) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: user
+                data: Student
             });
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async updateUser(req, res, next) {
+    static async updateStudent(req, res, next) {
         try {
 
-            const { userId, ...value } = req.body
-            const user = await UserService.updateUser(userId, value);
-            if (!user) {
+            const { studentId, ...value } = req.body
+            const Student = await StudentService.updateStudent(studentId, value);
+            if (!Student) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: 'done',
-                data: user,
+                data: Student,
 
             })
         } catch (error) {
@@ -75,11 +80,11 @@ class UserController {
             return next(createError.InternalServerError());
         }
     }
-    static async deleteUserById(req, res, next) {
+    static async deleteStudentById(req, res, next) {
         try {
-            console.log(req.params.userId)
-            const user = await UserService.deleteUserById(req.params.userId);
-            if (user <= 0) {
+            console.log(req.params.studentId)
+            const Student = await StudentService.deleteStudentById(req.params.studentId);
+            if (Student <= 0) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
@@ -94,4 +99,4 @@ class UserController {
 
 }
 
-module.exports = UserController;
+module.exports = StudentController;

@@ -1,73 +1,72 @@
 const createError = require('http-errors');
 const { hashPassword } = require("../helpers/password-crypt");
-const SessionUserService = require("../services/session-user-service");
+const TeacherService = require("../services/teacher-service");
 
-class SessionUserController {
+class TeacherController {
     // user role
-    static async getSessionUserById(req, res, next) {
+    static async getTeacherById(req, res, next) {
         try {
-            const SessionUser = await SessionUserService.getSessionUserById(req.params.sessionUserId);
-            if (!SessionUser) {
-               
-                return next(createError.BadRequest(`Không tìm được SessionUser với id là ${req.params.sessionUserId}`));
+            const Teacher = await TeacherService.getTeacherById(req.params.teacherId);
+            if (!Teacher) {
+                return next(createError.BadRequest(`Không tìm được Teacher với id là ${req.params.teacherId}`));
 
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: SessionUser
+                data: Teacher
             })
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async getAllSessionUser(req, res, next) {
+    static async getAllTeacher(req, res, next) {
         try {
-            const SessionUsers = await SessionUserService.getAllSessionUser();
-            if (!SessionUsers) {
-                
-                return next(createError.BadRequest(`Không tìm được SessionUser`));
+            const Teachers = await TeacherService.getAllTeacher();
+            if (!Teachers) {
+              
+                return next(createError.BadRequest(`Không tìm được Teacher`));
 
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: SessionUsers
+                data: Teachers
             })
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async createSessionUser(req, res, next) {
+    static async createTeacher(req, res, next) {
         try {
-            const SessionUser = await SessionUserService.createSessionUser(req.body);
-            if (!SessionUser) {
+            const Teacher = await TeacherService.createTeacher(req.body);
+            if (!Teacher) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: "done",
-                data: SessionUser
+                data: Teacher
             });
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError());
         }
     }
-    static async updateSessionUser(req, res, next) {
+    static async updateTeacher(req, res, next) {
         try {
 
-            const { sessionUserId, ...value } = req.body
-            const SessionUser = await SessionUserService.updateSessionUser(sessionUserId, value);
-            if (!SessionUser) {
+            const { teacherId, ...value } = req.body
+            const Teacher = await TeacherService.updateTeacher(teacherId, value);
+            if (!Teacher) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: 'done',
-                data: SessionUser,
+                data: Teacher,
 
             })
         } catch (error) {
@@ -75,17 +74,16 @@ class SessionUserController {
             return next(createError.InternalServerError());
         }
     }
-    static async deleteSessionUserById(req, res, next) {
+    static async deleteTeacherById(req, res, next) {
         try {
-            console.log(req.params.sessionUserId)
-            const SessionUser = await SessionUserService.deleteSessionUserById(req.params.sessionUserId);
-            if (SessionUser <= 0) {
+            console.log(req.params.teacherId)
+            const Teacher = await TeacherService.deleteTeacherById(req.params.teacherId);
+            if (Teacher <= 0) {
                 return next(createError.InternalServerError());
             }
             return res.status(200).json({
                 status: 200,
                 message: 'done',
-                data: SessionUser
             })
         } catch (error) {
             console.log(error);
@@ -95,4 +93,4 @@ class SessionUserController {
 
 }
 
-module.exports = SessionUserController;
+module.exports = TeacherController;
