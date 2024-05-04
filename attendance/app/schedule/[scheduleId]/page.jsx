@@ -421,7 +421,7 @@ export default function ScheduleItemPage({ params }) {
                 <ModalContent>
                     {(onClose) => (
                         <>
-                            <ModalHeader className="flex flex-col gap-1">{isNewItem ? "Thêm lớp mới" : "Chỉnh sửa lớp học"}</ModalHeader>
+                            <ModalHeader className="flex flex-col gap-1">{isNewItem ? "Thêm tiết học mới mới" : "Chỉnh sửa tiết học"}</ModalHeader>
                             <ModalBody>
                                 <p>Lớp học: {schedule.ClassRoom.classRoomName}</p>
                                 <Input

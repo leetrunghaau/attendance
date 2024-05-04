@@ -40,8 +40,16 @@ export const siteConfig = {
 			href: "/",
 		},
 		{
+			label: "Diểm danh",
+			href: "/teacherAttendence",
+		},
+		{
 			label: "Thiết bị",
 			href: "/driver",
+		},
+		{
+			label: "Giáo viên",
+			href: "/teacher",
 		},
 		{
 			label: "Học sinh",
@@ -55,6 +63,7 @@ export const siteConfig = {
 			label: "Thời khóa biểu",
 			href: "/schedule",
 		}
+
 	],
 	links: {
 		github: "https://github.com/nextui-org/nextui",
