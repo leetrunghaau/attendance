@@ -4,6 +4,23 @@ const StudentService = require("../services/student-service");
 
 class StudentController {
     // user role
+    static async getStudentById(req, res, next) {
+        try {
+            const student = await StudentService.getStudentById(req.params.studentId);
+            if (!student) {
+                return next(createError.BadRequest(`Không tìm được student với id là ${req.params.studentId}`));
+
+            }
+            return res.status(200).json({
+                status: 200,
+                message: "done",
+                data: student
+            })
+        } catch (error) {
+            console.log(error);
+            return next(createError.InternalServerError());
+        }
+    }
     static async getStudentByClassRoomId(req, res, next) {
         try {
             let Student;

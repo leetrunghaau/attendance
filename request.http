@@ -119,3 +119,6 @@ Content-Type: application/json
     "currentTime": "09:15:25"
 
 }
+
+### get 1 student 
+GET  http://localhost:8080/api/student/e0b8a4c75e020db703
