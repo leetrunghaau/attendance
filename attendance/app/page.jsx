@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Link } from "@nextui-org/link";
 import { Snippet } from "@nextui-org/snippet";
 import { Code } from "@nextui-org/code"
@@ -25,24 +25,24 @@ import { Tooltip } from '@nextui-org/tooltip';
 
 
 export default function Home() {
-  const [listClassRoom, setlistClassRoom] = React.useState([]);
-  const [classRoomSelected, setClassRoomSelected] = React.useState(null);
-  const [dateSelected, setDateSelected] = React.useState(getCurDateForSelectUi());
+  const [listClassRoom, setlistClassRoom] = useState([]);
+  const [classRoomSelected, setClassRoomSelected] = useState(null);
+  const [dateSelected, setDateSelected] = useState(getCurDateForSelectUi());
 
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [modalData, setModalData] = React.useState();
+  const [modalData, setModalData] = useState();
 
-  const [listData, setListData] = React.useState([]);
-  const [page, setPage] = React.useState(1);
+  const [listData, setListData] = useState([]);
+  const [page, setPage] = useState(1);
   const rowsPerPage = 10;
   const pages = Math.ceil(listData.length / rowsPerPage);
-  const items = React.useMemo(() => {
+  const items = useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     return listData.slice(start, end);
   }, [page, listData]);
 
-  const [columns, setColumes] = React.useState([{
+  const [columns, setColumes] = useState([{
     lessonId: "studentName",
     lessonName: "Họ và tên",
   },
@@ -117,7 +117,7 @@ export default function Home() {
       <TableColumn key={column.lessonId}>{column.lessonName} </TableColumn>
     )
   }
-  const renderCell = React.useCallback((dataItem, columnKey) => {
+  const renderCell = useCallback((dataItem, columnKey) => {
     const cellValue = dataItem[columnKey];
 
     switch (columnKey) {

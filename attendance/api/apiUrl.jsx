@@ -1,4 +1,5 @@
 export const BASE_URL = "http://localhost:8080"; //LOCAL
+// export const BASE_URL = "http://14.187.134.182:8080"; //LOCAL
 
 export const URL_API = {
   LOGIN: {

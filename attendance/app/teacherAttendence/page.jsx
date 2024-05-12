@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import  { useEffect, useMemo, useState } from "react";
 import { Link } from "@nextui-org/link";
 import { Snippet } from "@nextui-org/snippet";
 import { Code } from "@nextui-org/code"
@@ -22,18 +22,18 @@ import { ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from
 import { Modal } from '@nextui-org/modal';
 
 
-export default function teacherAttendencePage() {
-    const [listTeacher, setlistTeacher] = React.useState([]);
-    const [teacherSelected, setTeacherSelected] = React.useState(null);
-    const [dateSelected, SetDateSelected] = React.useState(getCurDateForSelectUi());
+export default function TeacherAttendencePage() {
+    const [listTeacher, setlistTeacher] = useState([]);
+    const [teacherSelected, setTeacherSelected] = useState(null);
+    const [dateSelected, SetDateSelected] = useState(getCurDateForSelectUi());
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
-    const [listData, setListData] = React.useState([]);
-    const [page, setPage] = React.useState(1);
+    const [listData, setListData] = useState([]);
+    const [page, setPage] = useState(1);
     const rowsPerPage = 10;
     const pages = Math.ceil(listData.length / rowsPerPage);
-    const items = React.useMemo(() => {
+    const items = useMemo(() => {
         const start = (page - 1) * rowsPerPage;
         const end = start + rowsPerPage;
         return listData.slice(start, end);

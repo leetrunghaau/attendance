@@ -1,9 +1,9 @@
 "use client";
-import React from "react";
+import React, { useCallback, useMemo, useState } from "react";
 import { useEffect } from 'react'
 import { title } from "@/components/primitives";
 import { Pagination } from "@nextui-org/pagination";
-import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/Table";
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue } from "@nextui-org/table";
 import { Button } from "@nextui-org/button";
 import { DeleteIcon, EditIcon, EyeIcon, LockIcon, MailIcon, PlusIcon } from "@/components/icons";
 import { Modal, ModalBody, ModalContent, ModalFooter, ModalHeader, useDisclosure } from "@nextui-org/modal";
@@ -51,14 +51,19 @@ const dayInWeeks = [
         key: "6",
         lable: "Thứ bảy",
         value: 6
+    },
+    {
+        key: "7",
+        lable: "Chủ nhật",
+        value: 7
     }
 ]
 
 export default function ScheduleItemPage({ params }) {
 
-    const [listLesson, setlistLesson] = React.useState([]);
-    const [listTeacher, setlistTeacher] = React.useState([]);
-    const [schedule, setSchedule] = React.useState({
+    const [listLesson, setlistLesson] = useState([]);
+    const [listTeacher, setlistTeacher] = useState([]);
+    const [schedule, setSchedule] = useState({
         scheduleId: "",
         classRoomId: "",
         applyStart: "",
@@ -70,8 +75,8 @@ export default function ScheduleItemPage({ params }) {
     });
 
 
-    const [listData, setlistData] = React.useState([]);
-    const [modalData, setModalData] = React.useState({
+    const [listData, setlistData] = useState([]);
+    const [modalData, setModalData] = useState({
         scheduleItemId: "",
         teacherId: "",
         subject: "",
@@ -80,12 +85,12 @@ export default function ScheduleItemPage({ params }) {
         scheduleId: ""
 
     });
-    const [isNewItem, setIsNewItem] = React.useState(false);
+    const [isNewItem, setIsNewItem] = useState(false);
     // for table
-    const [page, setPage] = React.useState(1);
+    const [page, setPage] = useState(1);
     const rowsPerPage = 10;
     const pages = Math.ceil(listData.length / rowsPerPage);
-    const items = React.useMemo(() => {
+    const items = useMemo(() => {
         const start = (page - 1) * rowsPerPage;
         const end = start + rowsPerPage;
         return listData.slice(start, end);
@@ -119,7 +124,12 @@ export default function ScheduleItemPage({ params }) {
         {
             key: 6,
             label: "Thứ 7",
+        },
+        {
+            key: 7,
+            label: "Chủ nhật",
         }
+        
     ];
     //init  	##############################################################3
     useEffect(() => {
@@ -274,7 +284,7 @@ export default function ScheduleItemPage({ params }) {
     };
 
 
-    const renderCell = React.useCallback((dataItem, columnKey) => {
+    const renderCell = useCallback((dataItem, columnKey) => {
         const cellValue = dataItem[columnKey];
 
         switch (columnKey) {
