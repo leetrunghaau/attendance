@@ -94,7 +94,6 @@ class ScheduleController {
     }
     static async deleteScheduleById(req, res, next) {
         try {
-            console.log(req.params.scheduleId)
             const Schedule = await ScheduleService.deleteScheduleById(req.params.scheduleId);
             if (Schedule <= 0) {
                 return next(createError.InternalServerError());

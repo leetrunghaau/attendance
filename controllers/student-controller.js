@@ -99,7 +99,6 @@ class StudentController {
     }
     static async deleteStudentById(req, res, next) {
         try {
-            console.log(req.params.studentId)
             const Student = await StudentService.deleteStudentById(req.params.studentId);
             if (Student <= 0) {
                 return next(createError.InternalServerError());

@@ -73,8 +73,8 @@ POST http://localhost:8080/api/studentAttendenceCheckin
 Content-Type: application/json
 
 {
-    "studentId":"a906ddd636385340f4",
-    "driverId":"Kh0sf"
+    "studentId":"2d7c287356f719e555",
+    "driverId":"QMFEE"
 
 }
 #########################################################
@@ -82,8 +82,8 @@ POST http://localhost:8080/api/studentAttendenceCheckout
 Content-Type: application/json
 
 {
-    "studentId":"a906ddd636385340f4",
-    "driverId":"Kh0sf"
+    "studentId":"2d7c287356f719e555",
+    "driverId":"QMFEE"
 
 }
 #########################################################
@@ -92,16 +92,16 @@ Content-Type: application/json
 
 {
     "teacherId":"MnB19",
-    "driverId":"Kh0sf"
+    "driverId":"QMFEE"
 
 }
 #########################################################
-POST http://localhost:8080/api/teacherAttendenceCheckin
+POST http://localhost:8080/api/teacherAttendenceCheckout
 Content-Type: application/json
 
 {
     "teacherId":"MnB19",
-    "driverId":"Kh0sf"
+    "driverId":"QMFEE"
 
 }
 

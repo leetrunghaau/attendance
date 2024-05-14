@@ -77,7 +77,15 @@ class StudentAttendenceController {
             } else {
 
                 const listAttenUpdate = listAtten.map((item) => {
-                    let atten = item;
+                    let atten = {
+                        studentAttendanceId: item.studentAttendanceId,
+                        studentId: item.studentId,
+                        scheduleItemId: item.scheduleItemId,
+                        attendenceStatus: item.attendenceStatus,
+                        attendenceDate: item.attendenceDate,
+                        checkinTime: item.checkinTime,
+                        checkoutTime: item.checkoutTime
+                    };
                     let updateFlat = false;
                     if (item.ScheduleItem.Lesson.timeStart >= currentTime) {
                         atten.attendenceStatus = "Hiện diện";
@@ -96,6 +104,7 @@ class StudentAttendenceController {
                                 } else {
                                     // vào trễ cúp giũa tiết và vào lớp
                                     atten.attendenceStatus = "vào trễ, cúp tiết";
+                                    atten.checkinTime = currentTime;
                                     updateFlat = true;
                                 }
                             }
@@ -109,6 +118,7 @@ class StudentAttendenceController {
                                 } else {
                                     // vào trễ cúp giũa tiết và vào lớp (cúp giữa tiết)
                                     atten.attendenceStatus = "Cúp tiết";
+                                    atten.checkinTime =currentTime;
                                     updateFlat = true;
                                 }
                             } else {
@@ -119,6 +129,7 @@ class StudentAttendenceController {
                                 } else if (subtractMinutes(currentTime, item.ScheduleItem.Lesson.timeStart) < 25) {
                                     // vào trể nhỏ hơn 20 phút => vào trể
                                     atten.attendenceStatus = "Vào trể";
+                                    atten.checkinTime = currentTime
                                     updateFlat = true;
                                 } else {
                                     //vào trể lớn hơn 20 phút => cúp tiết
@@ -133,7 +144,7 @@ class StudentAttendenceController {
                         return atten
                     }
                 })
-                updateAttendances(listAttenUpdate)
+                await updateAttendances(listAttenUpdate)
                 return res.status(200).json({
                     status: 200,
                     message: "done att",
@@ -178,7 +189,15 @@ class StudentAttendenceController {
             let listAtten = await StudentAttendenceService.getAllStudentAttendenceByStudentAndDate(req.body.studentId, currentDate)
 
             const listAttenUpdate = listAtten.map((item) => {
-                let atten = item;
+                let atten = {
+                    studentAttendanceId: item.studentAttendanceId,
+                    studentId: item.studentId,
+                    scheduleItemId: item.scheduleItemId,
+                    attendenceStatus: item.attendenceStatus,
+                    attendenceDate: item.attendenceDate,
+                    checkinTime: item.checkinTime,
+                    checkoutTime: item.checkoutTime
+                };
                 let updateFlat = false;
                 if (item.ScheduleItem.Lesson.timeStart >= currentTime) {
                     atten.attendenceStatus = "Vắng";
@@ -186,6 +205,7 @@ class StudentAttendenceController {
                 } else if (item.ScheduleItem.Lesson.timeStart < currentTime && item.ScheduleItem.Lesson.timeEnd > currentTime) {
                     if (subtractMinutes(item.ScheduleItem.Lesson.timeEnd, currentTime) > 5) {
                         atten.attendenceStatus = atten.attendenceStatus + " + ra tiết sớm";
+                        atten.checkoutTime = currentTime
                         updateFlat = true;
                     }
                 }
@@ -193,7 +213,7 @@ class StudentAttendenceController {
                     return atten
                 }
             })
-            updateAttendances(listAttenUpdate)
+            await updateAttendances(listAttenUpdate)
             return res.status(200).json({
                 status: 200,
                 message: "done att",

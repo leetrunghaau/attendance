@@ -76,7 +76,6 @@ class TeacherController {
     }
     static async deleteTeacherById(req, res, next) {
         try {
-            console.log(req.params.teacherId)
             const Teacher = await TeacherService.deleteTeacherById(req.params.teacherId);
             if (Teacher <= 0) {
                 return next(createError.InternalServerError());

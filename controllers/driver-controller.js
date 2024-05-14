@@ -76,7 +76,6 @@ class DriverController {
     }
     static async deleteDriverById(req, res, next) {
         try {
-            console.log(req.params.driverId)
             const driver = await DriverService.deleteDriverById(req.params.driverId);
             if (driver <= 0) {
                 return next(createError.InternalServerError());

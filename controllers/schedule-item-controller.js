@@ -112,7 +112,6 @@ class ScheduleItemController {
     }
     static async deleteScheduleItemById(req, res, next) {
         try {
-            console.log(req.params.scheduleItemId)
             const ScheduleItem = await ScheduleItemService.deleteScheduleItemById(req.params.scheduleItemId);
             if (ScheduleItem <= 0) {
                 return next(createError.InternalServerError());

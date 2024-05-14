@@ -76,7 +76,6 @@ class ClassRoomController {
     }
     static async deleteClassRoomById(req, res, next) {
         try {
-            console.log(req.params.classRoomId)
             const ClassRoom = await ClassRoomService.deleteClassRoomById(req.params.classRoomId);
             if (ClassRoom <= 0) {
                 return next(createError.InternalServerError());

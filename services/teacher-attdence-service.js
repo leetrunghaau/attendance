@@ -63,12 +63,12 @@ class TeacherAttendenceService {
 
         return TeacherAttendence.bulkCreate(generatedIds);
     }
-    static async updateTeacherAttendence(teacherAttendenceId, teacherAttendenceData) {
+    static async updateTeacherAttendence(teacherAttendanceId, teacherAttendenceData) {
         await TeacherAttendence.update(teacherAttendenceData, {
-            where: { teacherAttendenceId: teacherAttendenceId },
+            where: { teacherAttendanceId: teacherAttendanceId },
 
         });
-        return this.getTeacherAttendenceById(teacherAttendenceId);
+        return this.getTeacherAttendenceById(teacherAttendanceId);
     }
 
     static async deleteTeacherAttendenceById(teacherAttendenceId) {
