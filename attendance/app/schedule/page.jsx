@@ -144,6 +144,7 @@ export default function SchedulePage() {
             if (getRs) {
                 if (getRs.status == 200) {
                     loadData()
+                    showSuccessToast("Tạo thời khóa biểu thành công")
                 }
             } else {
 
@@ -184,6 +185,7 @@ export default function SchedulePage() {
             if (getRs) {
                 if (getRs.status == 200) {
                     loadData()
+                    showSuccessToast("Sửa khóa biểu thành công")
                 }
             } else {
     
@@ -205,6 +207,8 @@ export default function SchedulePage() {
             if (getRs.status == 200) {
 
                 superLoadData(item.classRoomId)
+                showSuccessToast("Xóa thời khóa biểu thành công")
+
             }
         } else {
 
@@ -239,14 +243,14 @@ export default function SchedulePage() {
                             </Tooltip>
                         </Link>
 
-                        <Tooltip content="sửa lớp học">
+                        <Tooltip content="Sửa thời khóa biểu">
                             <span className="text-lg text-default-400 cursor-pointer active:opacity-50"
                                 onClick={() => editOnClick(dataItem)}
                             >
                                 <EditIcon />
                             </span>
                         </Tooltip>
-                        <Tooltip color="danger" content="Xóa lớp học">
+                        <Tooltip color="danger" content="Xóa thời khóa biểu">
                             <span className="text-lg text-danger cursor-pointer active:opacity-50"
                                 onClick={() => deleteOnClick(dataItem)}
                             >

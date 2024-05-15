@@ -13,7 +13,7 @@ import { createDriver, deleteDriver, getListDriver, updateDriver } from './../..
 import { Select, SelectItem } from '@nextui-org/react';
 import { createTeacher, deleteTeacher, getListTeacher, updateTeacher } from '@/service/teacher-service';
 import { getCurDateForSelectUi } from '@/Util/funstion';
-import { showErrorToast } from '../../components/toast';
+import { showErrorToast, showSuccessToast } from '../../components/toast';
 
 export default function TeacherPage() {
 	const [listData, setlistData] = useState([])
@@ -105,6 +105,8 @@ export default function TeacherPage() {
 		if (getRs) {
             if (getRs.status == 200) {
 			loadData()
+			showSuccessToast("Thêm giáo viên thành công")
+
 		}
         } else {
 
@@ -132,6 +134,8 @@ export default function TeacherPage() {
 		if (getRs) {
             if (getRs.status == 200) {
 			loadData()
+			showSuccessToast("Thay đổi thông tin giáo viên thành công")
+
 		}
         } else {
 
@@ -146,6 +150,7 @@ export default function TeacherPage() {
 		if (getRs) {
             if (getRs.status == 200) {
 			loadData()
+			showSuccessToast("Xóa giáo viên thành công")
 		}
         } else {
 
@@ -165,7 +170,7 @@ export default function TeacherPage() {
 			case "actions":
 				return (
 					<div className="relative flex items-center  gap-5">
-						<Tooltip content="sửa thiết bị">
+						<Tooltip content="Thay đổi thông tin giáo viên">
 							<span className="text-lg text-default-400 cursor-pointer active:opacity-50"
 								onClick={() => editOnClick(dataItem)}
 
@@ -173,7 +178,7 @@ export default function TeacherPage() {
 								<EditIcon />
 							</span>
 						</Tooltip>
-						<Tooltip color="danger" content="Xóa thiết bị">
+						<Tooltip color="danger" content="Xóa giáo viên">
 							<span className="text-lg text-danger cursor-pointer active:opacity-50"
 								onClick={() => deleteOnClick(dataItem)}
 							>

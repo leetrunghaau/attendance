@@ -11,7 +11,7 @@ import { Input } from "@nextui-org/input";
 import { createDriver, deleteDriver, getListDriver, updateDriver } from './../../service/driver-service';
 import { Select, SelectItem } from '@nextui-org/react';
 import { getListClassRoom } from '@/service/classRoom-service';
-import { showErrorToast } from '@/components/toast';
+import { showErrorToast, showSuccessToast } from '@/components/toast';
 
 export default function DriverPage() {
 	const [listData, setlistData] = useState([])
@@ -100,6 +100,8 @@ export default function DriverPage() {
 		if (getRs) {
             if (getRs.status == 200) {
 			loadData()
+			showSuccessToast("Tạo thiết bị thành công")
+
 		}
         } else {
 
@@ -126,6 +128,8 @@ export default function DriverPage() {
 		if (getRs) {
             if (getRs.status == 200) {
 				loadData()
+				showSuccessToast("Sửa thiết bị thành công")
+
 			}
         } else {
 
@@ -140,6 +144,8 @@ export default function DriverPage() {
 		if (getRs) {
             if (getRs.status == 200) {
 				loadData()
+				showSuccessToast("Xóa thiết bị thành công")
+
 			}
         } else {
 
@@ -160,7 +166,7 @@ export default function DriverPage() {
 				return (
 					<div className="relative flex items-center  gap-5">
 	
-						<Tooltip content="sửa thiết bị">
+						<Tooltip content="Sửa thiết bị">
 							<span className="text-lg text-default-400 cursor-pointer active:opacity-50"
 							onClick={() => editOnClick(dataItem)}
 							

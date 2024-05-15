@@ -87,27 +87,27 @@ export default function StudentPage() {
         let getRs = await getListClassRoom();
         if (getRs) {
             if (getRs.status == 200) {
-            setListClassRoom(getRs.data)
-        }
+                setListClassRoom(getRs.data)
+            }
         } else {
 
             showErrorToast("Lỗi kết nối máy chủ")
         }
-        
+
     }
     const loadData = async () => {
 
         if (classRoomSeleted) {
             let getRs = await getListStudent(classRoomSeleted.currentKey);
             if (getRs) {
-             if (getRs.status == 200) {
-                setlistData(getRs.data)
-            }
+                if (getRs.status == 200) {
+                    setlistData(getRs.data)
+                }
             } else {
-    
+
                 showErrorToast("Lỗi kết nối máy chủ")
             }
-           
+
         }
 
     };
@@ -115,14 +115,14 @@ export default function StudentPage() {
         let getRs = await getListStudent(classRoomId);
         if (getRs) {
             if (getRs.status == 200) {
-            // setListNhaSanXuat(getRs.data);
-            setlistData(getRs.data)
-        }
+                // setListNhaSanXuat(getRs.data);
+                setlistData(getRs.data)
+            }
         } else {
 
             showErrorToast("Lỗi kết nối máy chủ")
         }
-        
+
 
 
     };
@@ -131,13 +131,15 @@ export default function StudentPage() {
         let getRs = await createStudent(item);
         if (getRs) {
             if (getRs.status == 200) {
-            loadData()
-        }
+                loadData()
+                showSuccessToast("Thêm học sinh thành công")
+
+            }
         } else {
 
             showErrorToast("Lỗi kết nối máy chủ")
         }
-        
+
     };
     //sữa	##############################################################
     const editOnClick = (item) => {
@@ -159,13 +161,15 @@ export default function StudentPage() {
         let getRs = await updateStudent(item);
         if (getRs) {
             if (getRs.status == 200) {
-            loadData()
-        }
+                loadData()
+                showSuccessToast("Đổi thông tin học sinh thành công")
+
+            }
         } else {
 
             showErrorToast("Lỗi kết nối máy chủ")
         }
-        
+
     };
     //xóa	##############################################################
 
@@ -173,14 +177,15 @@ export default function StudentPage() {
         let getRs = await deleteStudent(item.studentId);
         if (getRs) {
             if (getRs.status == 200) {
-       
-            superLoadData(item.classRoomId)
-        }
+
+                superLoadData(item.classRoomId)
+                showSuccessToast("Xóa học sinh thành công")
+            }
         } else {
 
             showErrorToast("Lỗi kết nối máy chủ")
         }
-        
+
     };
 
     const deleteOnClick = (item) => {
@@ -197,14 +202,14 @@ export default function StudentPage() {
             case "actions":
                 return (
                     <div className="relative flex items-center  gap-5">
-                        <Tooltip content="sửa lớp học">
+                        <Tooltip content="Thay đổi thông tin học sinh">
                             <span className="text-lg text-default-400 cursor-pointer active:opacity-50"
                                 onClick={() => editOnClick(dataItem)}
                             >
                                 <EditIcon />
                             </span>
                         </Tooltip>
-                        <Tooltip color="danger" content="Xóa lớp học">
+                        <Tooltip color="danger" content="Xóa học sinh">
                             <span className="text-lg text-danger cursor-pointer active:opacity-50"
                                 onClick={() => deleteOnClick(dataItem)}
                             >

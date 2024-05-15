@@ -9,7 +9,7 @@ export const siteConfig = {
 			href: "/",
 		},
 		{
-			label: "Diểm danh",
+			label: "Điểm danh",
 			href: "/teacherAttendence",
 		},
 		{
@@ -40,7 +40,7 @@ export const siteConfig = {
 			href: "/",
 		},
 		{
-			label: "Diểm danh",
+			label: "Điểm danh",
 			href: "/teacherAttendence",
 		},
 		{

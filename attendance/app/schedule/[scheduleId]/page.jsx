@@ -88,7 +88,7 @@ export default function ScheduleItemPage({ params }) {
     const [isNewItem, setIsNewItem] = useState(false);
     // for table
     const [page, setPage] = useState(1);
-    const rowsPerPage = 10;
+    const rowsPerPage = 15;
     const pages = Math.ceil(listData.length / rowsPerPage);
     const items = useMemo(() => {
         const start = (page - 1) * rowsPerPage;
@@ -129,7 +129,7 @@ export default function ScheduleItemPage({ params }) {
             key: 7,
             label: "Chủ nhật",
         }
-        
+
     ];
     //init  	##############################################################3
     useEffect(() => {
@@ -203,13 +203,13 @@ export default function ScheduleItemPage({ params }) {
             // kiểm tra trùng
             const findLesson = listData.find((a) => a.lessonId === item.lessonId);
             let findDayOfWeek = null;
-            
+
             if (findLesson) {
                 findDayOfWeek = findLesson.listSchedule.find((b) => b.dayOfWeek == item.dayOfWeek);
             }
             if (findDayOfWeek) {
                 showWarningToast("Trùng tiết");
-            }else{
+            } else {
                 onClose();
                 let getRs = await createScheduleItem(item);
                 if (getRs) {
@@ -239,28 +239,28 @@ export default function ScheduleItemPage({ params }) {
     };
 
     const updateItem = async (item) => {
-      
-            // kiểm tra trùng
-            const findLesson = listData.find((a) => a.lessonId === item.lessonId);
-            let findDayOfWeek = null;
-            
-            if (findLesson) {
-                findDayOfWeek = findLesson.listSchedule.find((b) => b.dayOfWeek == item.dayOfWeek && b.scheduleItemId != item.scheduleItemId);
-            }
-            if (findDayOfWeek) {
-                showWarningToast("Trùng tiết");
-            }else{
-                onClose();
-                let getRs = await updateScheduleItem(item);
-                if (getRs) {
-                    if (getRs.status == 200) {
-                        loadData()
-                    }
-                } else {
 
-                    showErrorToast("Lỗi kết nối máy chủ")
+        // kiểm tra trùng
+        const findLesson = listData.find((a) => a.lessonId === item.lessonId);
+        let findDayOfWeek = null;
+
+        if (findLesson) {
+            findDayOfWeek = findLesson.listSchedule.find((b) => b.dayOfWeek == item.dayOfWeek && b.scheduleItemId != item.scheduleItemId);
+        }
+        if (findDayOfWeek) {
+            showWarningToast("Trùng tiết");
+        } else {
+            onClose();
+            let getRs = await updateScheduleItem(item);
+            if (getRs) {
+                if (getRs.status == 200) {
+                    loadData()
                 }
+            } else {
+
+                showErrorToast("Lỗi kết nối máy chủ")
             }
+        }
     };
     //xóa	##############################################################
 
@@ -290,7 +290,11 @@ export default function ScheduleItemPage({ params }) {
         switch (columnKey) {
             case "lessonId":
                 return (
-                    dataItem.lessonName
+                    <p>
+                        {dataItem.lessonName}
+                        <br />
+                        {dataItem.timeStart} - {dataItem.timeEnd}
+                    </p>
                 );
             default:
                 const schTtem = dataItem.listSchedule.find((item) => item.dayOfWeek == columnKey)
@@ -484,11 +488,15 @@ export default function ScheduleItemPage({ params }) {
                                     selectedKeys={[modalData.lessonId]}
                                     onSelectionChange={lessonIdSelectOnChange}
                                 >
-                                    {listLesson.map((lesson) => (
-                                        <SelectItem key={lesson.lessonId} value={lesson.lessonId}>
-                                            {lesson.lessonName}
-                                        </SelectItem>
-                                    ))}
+                                    {listLesson.map((lesson) => {
+                                        if (lesson.active) {
+                                            return (
+                                                <SelectItem key={lesson.lessonId} value={lesson.lessonId}>
+                                                    {lesson.lessonName}
+                                                </SelectItem>
+                                            )
+                                        }
+                                    })}
                                 </Select>
 
                                 <Select
