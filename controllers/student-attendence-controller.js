@@ -115,6 +115,7 @@ class StudentAttendenceController {
                                 if (subtractMinutes(currentTime, item.checkoutTime) <= 10) {
                                     //thời gian ra ngoài ngắn => vẫn tiếp tục tiếp tục học (hiện diện) 
                                     atten.attendenceStatus = "Hiện diện";
+                                    atten.checkoutTime = null;
                                     updateFlat = true;
                                 } else {
                                     // vào trễ cúp giũa tiết và vào lớp (cúp giữa tiết)
