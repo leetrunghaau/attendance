@@ -58,11 +58,14 @@ class StudentAttendenceController {
                         checkoutTime: null
                     }
                     if (item.Lesson.timeStart < currentTime && item.Lesson.timeEnd > currentTime) {
-                        if (subtractMinutes(currentTime, item.Lesson.timeStart) < 10) {
+                        if (subtractMinutes(currentTime, item.Lesson.timeStart) <= 5) {
                             atten.attendenceStatus = "Hiện diện";
                             atten.checkinTime = currentTime;
-                        } else {
+                        } else if (subtractMinutes(currentTime, item.Lesson.timeStart) <= 20) {
                             atten.attendenceStatus = "Vào trễ";
+                            atten.checkinTime = currentTime;
+                        }{
+                            atten.attendenceStatus = "Cúp tiết";
                             atten.checkinTime = currentTime;
                         }
 
@@ -97,7 +100,7 @@ class StudentAttendenceController {
                                 //trong một tiết có đi vô, không thấy đia ra và đang đi vô (magic)
                             } else {
                                 //vào trễ
-                                if (subtractMinutes(currentTime, item.checkoutTime) < 25) {
+                                if (subtractMinutes(currentTime, item.checkoutTime) <= 10) {
                                     //thời gian ra ngoài ngắn => vẫn tiếp tục trạng thái cũ vào trể  
                                     atten.attendenceStatus = "vào trễ";
                                     updateFlat = true;
@@ -110,10 +113,9 @@ class StudentAttendenceController {
                             }
                         } else {
                             if (item.checkoutTime != null) {
-                                if (subtractMinutes(currentTime, item.checkoutTime) < 25) {
+                                if (subtractMinutes(currentTime, item.checkoutTime) <= 10) {
                                     //thời gian ra ngoài ngắn => vẫn tiếp tục tiếp tục học (hiện diện) 
                                     atten.attendenceStatus = "Hiện diện";
-
                                     updateFlat = true;
                                 } else {
                                     // vào trễ cúp giũa tiết và vào lớp (cúp giữa tiết)
@@ -122,11 +124,12 @@ class StudentAttendenceController {
                                     updateFlat = true;
                                 }
                             } else {
-                                if (subtractMinutes(currentTime, item.ScheduleItem.Lesson.timeStart) < 10) {
+                                if (subtractMinutes(currentTime, item.ScheduleItem.Lesson.timeStart) <= 5) {
                                     // vào trể nhỏ hơn 10 phút => hiện diện
                                     atten.attendenceStatus = "Hiện diện";
+                                    atten.checkinTime = currentTime
                                     updateFlat = true;
-                                } else if (subtractMinutes(currentTime, item.ScheduleItem.Lesson.timeStart) < 25) {
+                                } else if (subtractMinutes(currentTime, item.ScheduleItem.Lesson.timeStart) <= 20) {
                                     // vào trể nhỏ hơn 20 phút => vào trể
                                     atten.attendenceStatus = "Vào trể";
                                     atten.checkinTime = currentTime
@@ -134,6 +137,7 @@ class StudentAttendenceController {
                                 } else {
                                     //vào trể lớn hơn 20 phút => cúp tiết
                                     atten.attendenceStatus = "Cúp tiết";
+                                    atten.checkinTime = currentTime
                                     updateFlat = true;
                                 }
 
@@ -203,10 +207,17 @@ class StudentAttendenceController {
                     atten.attendenceStatus = "Vắng";
                     updateFlat = true;
                 } else if (item.ScheduleItem.Lesson.timeStart < currentTime && item.ScheduleItem.Lesson.timeEnd > currentTime) {
-                    if (subtractMinutes(item.ScheduleItem.Lesson.timeEnd, currentTime) > 5) {
-                        atten.attendenceStatus = atten.attendenceStatus + " + ra tiết sớm";
+                    if (subtractMinutes(item.ScheduleItem.Lesson.timeEnd, currentTime) <= 5) {
+                        atten.attendenceStatus = atten.attendenceStatus ;
                         atten.checkoutTime = currentTime
                         updateFlat = true;
+                    }else if (subtractMinutes(item.ScheduleItem.Lesson.timeEnd, currentTime) <= 20) {
+                        atten.attendenceStatus = atten.attendenceStatus + " + Ra tiết sớm";
+                        atten.checkoutTime = currentTime
+                        updateFlat = true;
+                    }else{
+                        atten.attendenceStatus = atten.attendenceStatus + " + Cúp tiết";
+                        atten.checkoutTime = currentTime
                     }
                 }
                 if (updateFlat) {

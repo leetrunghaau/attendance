@@ -6,62 +6,68 @@ Content-Type: application/json
 [
     {
         "lessonName":"Tiết 1",
-        "timeStart":"07:15:00",
-        "timeEnd":"08:00:00",
+        "timeStart":"07:30:00",
+        "timeEnd":"08:05:00",
         "active":true
     },
     {
         "lessonName":"Tiết 2",
         "timeStart":"08:05:00",
-        "timeEnd":"08:50:00",
+        "timeEnd":"08:40:00",
         "active":true
     },
     {
+        "lessonName":"Ra chơi",
+        "timeStart":"08:40:00",
+        "timeEnd":"09:10:00",
+        "active":false
+    },
+    {
         "lessonName":"Tiết 3",
-        "timeStart":"09:00:00",
-        "timeEnd":"09:45:00",
+        "timeStart":"09:10:00",
+        "timeEnd":"10:20:00",
         "active":true
     },
     {
         "lessonName":"Tiết 4",
-        "timeStart":"09:50:00",
-        "timeEnd":"10:35:00",
+        "timeStart":"09:45:00",
+        "timeEnd":"10:20:00",
         "active":true
     },
     {
         "lessonName":"Tiết 5",
-        "timeStart":"10:40:00",
-        "timeEnd":"11:25:00",
+        "timeStart":"10:20:00",
+        "timeEnd":"10:55:00",
         "active":true
     },
     {
+        "lessonName":"Nghỉ trưa",
+        "timeStart":"10:55:00",
+        "timeEnd":"14:00:00",
+        "active":false
+    },
+    {
         "lessonName":"Tiết 6",
-        "timeStart":"12:50:00",
-        "timeEnd":"13:35:00",
+        "timeStart":"14:00:00",
+        "timeEnd":"14:35:00",
         "active":true
     },
     {
         "lessonName":"Tiết 7",
-        "timeStart":"13:40:00",
-        "timeEnd":"14:25:00",
+        "timeStart":"14:35:00",
+        "timeEnd":"15:10:00",
         "active":true
+    },
+    {
+        "lessonName":"Ra chơi",
+        "timeStart":"15:10:00",
+        "timeEnd":"15:40:00",
+        "active":false
     },
     {
         "lessonName":"Tiết 8",
-        "timeStart":"14:35:00",
-        "timeEnd":"15:20:00",
-        "active":true
-    },
-    {
-        "lessonName":"Tiết 9",
-        "timeStart":"15:25:00",
-        "timeEnd":"16:10:00",
-        "active":true
-    },
-    {
-        "lessonName":"Tiết 10",
-        "timeStart":"16:15:00",
-        "timeEnd":"17:00:00",
+        "timeStart":"15:40:00",
+        "timeEnd":"16:15:00",
         "active":true
     }
 ]
@@ -73,8 +79,8 @@ POST http://localhost:8080/api/studentAttendenceCheckin
 Content-Type: application/json
 
 {
-    "studentId":"2d7c287356f719e555",
-    "driverId":"QMFEE"
+    "studentId":"HS_702-015-591",
+    "driverId":"1vUxO"
 
 }
 #########################################################
@@ -121,4 +127,4 @@ Content-Type: application/json
 }
 
 ### get 1 student 
-GET  http://localhost:8080/api/student/e0b8a4c75e020db703
+GET  http://localhost:8080/api/schedule/e0b8a4c75e020db703

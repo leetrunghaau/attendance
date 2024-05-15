@@ -33,7 +33,10 @@ class ScheduleItemService {
           }
         },
         {
-          model: Lesson
+          model: Lesson,
+          where:{
+            active: true
+          }
         }
       ]
     });
@@ -54,7 +57,10 @@ class ScheduleItemService {
           }
         },
         {
-          model: Lesson
+          model: Lesson,
+          where:{
+            active : true
+          }
         }
       ]
     });

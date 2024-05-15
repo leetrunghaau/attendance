@@ -1,7 +1,7 @@
 
 const { generateKey } = require('crypto');
 const Teacher = require('../models/teacher-model');
-const { generateId, generateRandomString } = require('../helpers/generate-key');
+const { generateId, generateRandomString, generateGVId } = require('../helpers/generate-key');
 const ClassRoom = require('../models/class-room-model');
 
 class TeacherService {
@@ -13,7 +13,7 @@ class TeacherService {
     return Teacher.findAll();
   }
   static async createTeacher(teacherData) {
-    teacherData.teacherId = generateId();
+    teacherData.teacherId = generateGVId();
     return Teacher.create(teacherData);
   }
 

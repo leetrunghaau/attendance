@@ -1,7 +1,7 @@
 
 const { generateKey } = require('crypto');
 const Schedule = require('../models/schedule_model');
-const { generateId } = require('../helpers/generate-key');
+const { generateId, generateIndexId } = require('../helpers/generate-key');
 const ClassRoom = require('../models/class-room-model');
 
 class ScheduleService {
@@ -15,7 +15,7 @@ class ScheduleService {
     return Schedule.findAll({ where: { classRoomId: classRoomId }, include: [{ model: ClassRoom }] });
   }
   static async createSchedule(scheduleData) {
-    scheduleData.scheduleId = generateId()
+    scheduleData.scheduleId = generateIndexId("TKB")
     return Schedule.create(scheduleData);
   }
 

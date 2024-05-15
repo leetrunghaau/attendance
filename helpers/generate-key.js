@@ -22,9 +22,61 @@ function generateRandomString(length) {
   }
   return result;
 }
+
+
+function generateGVId() {
+  const characters = '0123456789';
+  let result = 'GV_';
+  const charactersLength = characters.length;
+  for (let i = 0; i < 9; i++) {
+    if (i % 3 == 0 && i != 0) {
+      result += "-";
+    }
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+function generateHSId() {
+  const characters = '0123456789';
+  let result = 'HS_';
+  const charactersLength = characters.length;
+  for (let i = 0; i < 9; i++) {
+    if (i % 3 == 0 && i != 0) {
+      result += "-";
+    }
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+function generateIndexId(indexChar) {
+  const numChars = '0123456789';
+  const lowChars = 'abcdefghijklmnopqrstuvwxyz';
+  const hightChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+  let result = indexChar;
+   result += '_';
+  const numCharsLength = numChars.length;
+  const lowCharsLength = lowChars.length;
+  const hightCharsLength = hightChars.length;
+  for (let i = 0; i < 3; i++) {
+    result += hightChars.charAt(Math.floor(Math.random() * hightCharsLength));
+  }
+  result += "-";
+  for (let i = 0; i < 3; i++) {
+    result += lowChars.charAt(Math.floor(Math.random() * lowCharsLength));
+  }
+  result += "-";
+  for (let i = 0; i < 3; i++) {
+    result += numChars.charAt(Math.floor(Math.random() * numCharsLength));
+  }
+  return result;
+}
+
 module.exports = {
   accessTokenSecret,
   generateId,
   generateCode,
-  generateRandomString
+  generateRandomString,
+  generateGVId,
+  generateHSId,
+  generateIndexId
 }

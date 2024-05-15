@@ -33,14 +33,14 @@ class TeacherAttendenceController {
             if (!teacher) {
                 return next(createError.InternalServerError("lỗi dữ liệu: giáo viên này không có trong data"))
             }
-            
+
 
             const currentDate = moment().utcOffset('+07:00').format('YYYY-MM-DD');
             const currentTime = moment().utcOffset('+07:00').format('HH:mm:ss');
             // const currentTime = req.body.currentTime;
             let listAtten = await TeacherAttendenceService.getAllTeacherAttendenceByTeacherAndDate(req.body.teacherId, currentDate)
             if (listAtten.length == 0) {
-                
+
                 //     //xử lý điểm nếu điểm danh lần đầu
                 const listScheduleItem = await ScheduleItemService.getAllScheduleItemByTeacherAndDate(teacher.teacherId, currentDate);
                 listAtten = listScheduleItem.map((item) => {
@@ -54,15 +54,18 @@ class TeacherAttendenceController {
                     }
                     if (item.Lesson.timeStart < currentTime && item.Lesson.timeEnd > currentTime) {
                         if (item.Schedule.classRoomId == driver.classRoomId) { // check vào có đúng lớp hay không
-                            if (subtractMinutes(currentTime, item.Lesson.timeStart) < 10) {
+                            if (subtractMinutes(currentTime, item.Lesson.timeStart) <= 5) {
                                 atten.attendenceStatus = "Hiện diện";
                                 atten.checkinTime = currentTime;
+                            } else if (subtractMinutes(currentTime, item.Lesson.timeStart) < 20) {
+                                atten.attendenceStatus = "vào trễ";
+                                atten.checkinTime = currentTime;
                             } else {
-                                atten.attendenceStatus = "Vào trễ";
+                                atten.attendenceStatus = "Bỏ tiết";
                                 atten.checkinTime = currentTime;
                             }
-                        }else{
-                            atten.attendenceStatus = "Vắng";
+                        } else {
+                            atten.attendenceStatus = "Không đúng lớp";
                         }
                     } else if (item.Lesson.timeEnd <= currentTime) {
                         atten.attendenceStatus = "Vắng";
@@ -73,11 +76,11 @@ class TeacherAttendenceController {
                 })
                 listAtten = await TeacherAttendenceService.createMultipleTeacherAttendence(listAtten);
             } else {
-                
-                
+
+
                 const listAttenUpdate = listAtten.map((item) => {
                     let atten = {
-                        teacherAttendanceId : item.teacherAttendanceId,
+                        teacherAttendanceId: item.teacherAttendanceId,
                         teacherId: item.teacherId,
                         scheduleItemId: item.scheduleItemId,
                         attendenceStatus: item.attendenceStatus,
@@ -96,7 +99,7 @@ class TeacherAttendenceController {
                                 //trong một tiết có đi vô, không thấy đia ra và đang đi vô (magic)
                             } else {
                                 //vào trễ
-                                if (subtractMinutes(currentTime, item.checkoutTime) < 25) {
+                                if (subtractMinutes(currentTime, item.checkoutTime) <= 10) {
                                     //thời gian ra ngoài ngắn => vẫn tiếp tục trạng thái cũ vào trể  
                                     atten.attendenceStatus = "vào trễ";
                                     updateFlat = true;
@@ -109,14 +112,14 @@ class TeacherAttendenceController {
                             }
                         } else {
                             if (item.checkoutTime != null) {
-                                if (subtractMinutes(currentTime, item.checkoutTime) < 25) {
+                                if (subtractMinutes(currentTime, item.checkoutTime) < 10) {
                                     //thời gian ra ngoài ngắn => vẫn tiếp tục tiếp tục học (hiện diện) 
                                     atten.attendenceStatus = "Hiện diện";
 
                                     updateFlat = true;
                                 } else {
                                     // vào trễ cúp giũa tiết và vào lớp (cúp giữa tiết)
-                                    atten.attendenceStatus = "Cúp tiết";
+                                    atten.attendenceStatus = "Bỏ tiết";
                                     atten.checkinTime = currentTime;
                                     updateFlat = true;
                                 }
@@ -133,16 +136,16 @@ class TeacherAttendenceController {
                                         updateFlat = true;
                                     } else {
                                         //vào trể lớn hơn 20 phút => cúp tiết
-                                        atten.attendenceStatus = "Cúp tiết";
+                                        atten.attendenceStatus = "Bỏ tiết";
                                         atten.checkinTime = currentTime;
                                         updateFlat = true;
                                     }
-                                }else{
-                                    // vào trể, vào lộn lớp => vắng
-                                    atten.attendenceStatus = "Vắng";
+                                } else {
+                                    // // vào trể, vào lộn lớp => vắng
+                                    atten.attendenceStatus = "Không đúng lớp";
                                     updateFlat = true;
                                 }
-                                
+
 
                             }
                         }
@@ -182,7 +185,7 @@ class TeacherAttendenceController {
             if (!Teacher) {
                 return next(createError.InternalServerError("lỗi dữ liệu: Giáo viên này không có trong data"))
             }
-            
+
 
             const currentDate = moment().utcOffset('+07:00').format('YYYY-MM-DD');
             const currentTime = moment().utcOffset('+07:00').format('HH:mm:ss');
@@ -191,7 +194,7 @@ class TeacherAttendenceController {
 
             const listAttenUpdate = listAtten.map((item) => {
                 let atten = {
-                    teacherAttendanceId : item.teacherAttendanceId,
+                    teacherAttendanceId: item.teacherAttendanceId,
                     teacherId: item.teacherId,
                     scheduleItemId: item.scheduleItemId,
                     attendenceStatus: item.attendenceStatus,
@@ -240,14 +243,14 @@ class TeacherAttendenceController {
             if (!teacher) {
                 return next(createError.InternalServerError("lỗi dữ liệu: giáo viên này không có trong data"))
             }
-            
+
 
             const currentDate = moment().utcOffset('+07:00').format('YYYY-MM-DD');
             // const currentTime = moment().utcOffset('+07:00').format('HH:mm:ss');
             const currentTime = req.body.currentTime;
             let listAtten = await TeacherAttendenceService.getAllTeacherAttendenceByTeacherAndDate(req.body.teacherId, currentDate)
             if (listAtten.length == 0) {
-                
+
                 //     //xử lý điểm nếu điểm danh lần đầu
                 const listScheduleItem = await ScheduleItemService.getAllScheduleItemByTeacherAndDate(teacher.teacherId, currentDate);
                 listAtten = listScheduleItem.map((item) => {
@@ -268,7 +271,7 @@ class TeacherAttendenceController {
                                 atten.attendenceStatus = "Vào trễ";
                                 atten.checkinTime = currentTime;
                             }
-                        }else{
+                        } else {
                             atten.attendenceStatus = "Vắng";
                         }
                     } else if (item.Lesson.timeEnd <= currentTime) {
@@ -280,8 +283,8 @@ class TeacherAttendenceController {
                 })
                 listAtten = await TeacherAttendenceService.createMultipleTeacherAttendence(listAtten);
             } else {
-                
-                
+
+
                 const listAttenUpdate = listAtten.map((item) => {
                     let atten = item;
                     let updateFlat = false;
@@ -333,12 +336,12 @@ class TeacherAttendenceController {
                                         atten.attendenceStatus = "Cúp tiết";
                                         updateFlat = true;
                                     }
-                                }else{
+                                } else {
                                     // vào trể, vào lộn lớp => vắng
                                     atten.attendenceStatus = "Vắng";
                                     updateFlat = true;
                                 }
-                                
+
 
                             }
                         }
@@ -378,7 +381,7 @@ class TeacherAttendenceController {
             if (!Teacher) {
                 return next(createError.InternalServerError("lỗi dữ liệu: học sinh này không có trong data"))
             }
-            
+
 
             const currentDate = moment().utcOffset('+07:00').format('YYYY-MM-DD');
             // const currentTime = moment().utcOffset('+07:00').format('HH:mm:ss');

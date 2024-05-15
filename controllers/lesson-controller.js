@@ -11,7 +11,7 @@ class LessonController {
               return next(createError.InternalServerError());
             }
             Lessons.sort((a, b) => {
-                return parseInt(a.name) - parseInt(b.name);
+                return (a.timeStart) - (b.timeStart);
             });
             return res.status(200).json({
                 status: 200,

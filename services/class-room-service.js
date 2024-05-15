@@ -1,7 +1,7 @@
 
 const { generateKey } = require('crypto');
 const ClassRoom = require('../models/class-room-model');
-const { generateId } = require('../helpers/generate-key');
+const { generateId, generateIndexId } = require('../helpers/generate-key');
 
 class ClassRoomService {
   static async getClassRoomById(classRoomId) {
@@ -11,7 +11,7 @@ class ClassRoomService {
     return ClassRoom.findAll();
   }
   static async createClassRoom(classRoomData) {
-    classRoomData.classRoomId = generateId()
+    classRoomData.classRoomId = generateIndexId("LOP")
     return ClassRoom.create(classRoomData);
   }
 

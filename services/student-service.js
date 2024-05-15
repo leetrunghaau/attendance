@@ -1,7 +1,7 @@
 
 const { generateKey } = require('crypto');
 const Student = require('../models/student-model');
-const { generateId } = require('../helpers/generate-key');
+const { generateId, generateHSId } = require('../helpers/generate-key');
 
 class StudentService {
   static async getStudentById(studentId) {
@@ -16,7 +16,7 @@ class StudentService {
   }
 
   static async createStudent(studentData) {
-    studentData.studentId = generateId()
+    studentData.studentId = generateHSId()
     return Student.create(studentData);
   }
 
