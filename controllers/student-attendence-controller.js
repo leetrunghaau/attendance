@@ -60,7 +60,6 @@ class StudentAttendenceController {
                     if (item.Lesson.timeStart < currentTime && item.Lesson.timeEnd > currentTime) {
                         if (subtractMinutes(currentTime, item.Lesson.timeStart) <= 5) {
                             atten.attendenceStatus = "Hiện diện";
-                            atten.checkinTime = currentTime;
                         } else if (subtractMinutes(currentTime, item.Lesson.timeStart) <= 20) {
                             atten.attendenceStatus = "Vào trễ";
                             atten.checkinTime = currentTime;
@@ -127,7 +126,6 @@ class StudentAttendenceController {
                                 if (subtractMinutes(currentTime, item.ScheduleItem.Lesson.timeStart) <= 5) {
                                     // vào trể nhỏ hơn 10 phút => hiện diện
                                     atten.attendenceStatus = "Hiện diện";
-                                    atten.checkinTime = currentTime
                                     updateFlat = true;
                                 } else if (subtractMinutes(currentTime, item.ScheduleItem.Lesson.timeStart) <= 20) {
                                     // vào trể nhỏ hơn 20 phút => vào trể

@@ -26,7 +26,7 @@ function generateRandomString(length) {
 
 function generateGVId() {
   const characters = '0123456789';
-  let result = 'GV_';
+  let result = 'GV-';
   const charactersLength = characters.length;
   for (let i = 0; i < 9; i++) {
     if (i % 3 == 0 && i != 0) {
@@ -38,7 +38,7 @@ function generateGVId() {
 }
 function generateHSId() {
   const characters = '0123456789';
-  let result = 'HS_';
+  let result = 'HS-';
   const charactersLength = characters.length;
   for (let i = 0; i < 9; i++) {
     if (i % 3 == 0 && i != 0) {
@@ -53,7 +53,7 @@ function generateIndexId(indexChar) {
   const lowChars = 'abcdefghijklmnopqrstuvwxyz';
   const hightChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
   let result = indexChar;
-   result += '_';
+   result += '-';
   const numCharsLength = numChars.length;
   const lowCharsLength = lowChars.length;
   const hightCharsLength = hightChars.length;

@@ -56,8 +56,7 @@ class TeacherAttendenceController {
                         if (item.Schedule.classRoomId == driver.classRoomId) { // check vào có đúng lớp hay không
                             if (subtractMinutes(currentTime, item.Lesson.timeStart) <= 5) {
                                 atten.attendenceStatus = "Hiện diện";
-                                atten.checkinTime = currentTime;
-                            } else if (subtractMinutes(currentTime, item.Lesson.timeStart) < 20) {
+                            } else if (subtractMinutes(currentTime, item.Lesson.timeStart) <= 20) {
                                 atten.attendenceStatus = "vào trễ";
                                 atten.checkinTime = currentTime;
                             } else {
@@ -130,7 +129,7 @@ class TeacherAttendenceController {
                                         // vào trể nhỏ hơn 10 phút => hiện diện
                                         atten.attendenceStatus = "Hiện diện";
                                         updateFlat = true;
-                                    } else if (subtractMinutes(currentTime, item.ScheduleItem.Lesson.timeStart) < 25) {
+                                    } else if (subtractMinutes(currentTime, item.ScheduleItem.Lesson.timeStart) < 20) {
                                         // vào trể nhỏ hơn 20 phút => vào trể
                                         atten.attendenceStatus = "Vào trể";
                                         updateFlat = true;
