@@ -37,6 +37,19 @@ class ReportImgController {
             return next(createError.InternalServerError(error));
         }
     }
+    static async upload(req, res, next) {
+        try {
+            if (!req.file) {
+                res.status(400).json({ message: 'No image file uploaded' });
+              } else {
+                const filename = req.file.filename;
+                res.status(200).json({ message: 'Image uploaded successfully', filename });
+              }
+        } catch (error) {
+            console.log(error);
+            return next(createError.InternalServerError(error));
+        }
+    }
     static async getAllImgLink(req, res, next) {
         try {
             let img_link = null;
@@ -49,7 +62,7 @@ class ReportImgController {
                 return next(createError.InternalServerError());
             }
             img_link.sort((a, b) => {
-                return (a.imgTime) - (b.imgTime);
+                return (b.imgTime) - (a.imgTime);
             });
             return res.status(200).json({
                 status: 200,
