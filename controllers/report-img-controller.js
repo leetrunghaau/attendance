@@ -11,12 +11,24 @@ const ClassRoomService = require('../services/class-room-service');
 
 class ReportImgController {
     // user role
-
+    static async deleteImg(req, res, next) {
+        try {
+            const img_link = await ImgLinkService.deleteAll();
+            if (!img_link) {
+                return next(createError.InternalServerError("Lỗi hệ thống"))
+            }
+            return res.status(200).json({
+                message: "Đã xóa thành công"
+            })
+        } catch (error) {
+            console.log(error);
+            return next(createError.InternalServerError(error));
+        }
+    }
     static async uploadImg(req, res, next) {
         try {
-            
+
             const driver = await DriverService.getDriverById(req.body.driverId)
-           
             let updateParam = {
                 linkValue: req.body.linkValue,
                 imgStatus: req.body.imgStatus,
@@ -41,10 +53,25 @@ class ReportImgController {
         try {
             if (!req.file) {
                 res.status(400).json({ message: 'No image file uploaded' });
-              } else {
+            } else {
                 const filename = req.file.filename;
-                res.status(200).json({ message: 'Image uploaded successfully', filename });
-              }
+                const driver = await DriverService.getDriverById(req.body.driverId)
+                let updateParam = {
+                    linkValue: filename,
+                    imgStatus: req.body.imgStatus,
+                    imgTime: moment().utcOffset('+07:00'),
+                    classRoomId: driver?.classRoomId ?? null
+                };
+                const img_link = await ImgLinkService.createImgLink(updateParam);
+                if (!img_link) {
+                    return next(createError.InternalServerError("không up được data"))
+                }
+                return res.status(200).json({
+                    status: 200,
+                    message: "done",
+                    data: img_link
+                })
+            }
         } catch (error) {
             console.log(error);
             return next(createError.InternalServerError(error));

@@ -19,6 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 router.post("/uploadImg", ReportImgController.uploadImg);
-// router.post("/upload",upload.single('image'), ReportImgController.upload);
+router.post("/upload",upload.single('image'), ReportImgController.upload);
 router.get("/imgLinks/:classRoomId", ReportImgController.getAllImgLink);
+router.get("/deleteImg", ReportImgController.deleteImg);
 module.exports = router;

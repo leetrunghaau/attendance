@@ -39,6 +39,11 @@ class ImgLinkService {
             where: { imgLinkId: imgLinkId },
         });
     }
+    static async deleteAll() {
+        return ImgLink.destroy({
+            where: { classRoomId: null },
+        });
+    }
 }
 
 module.exports = ImgLinkService;
