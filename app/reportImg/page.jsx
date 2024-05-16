@@ -24,7 +24,7 @@ export default function ReportImgPage() {
 	const [listClassRoom, setListClassRoom] = useState([]);
 	const [classRoomSeleted, setClassRoomSelected] = useState(null);
 	const [listData, setlistData] = useState([]);
-	const [modalData, setModalData] = useState({	});
+	const [modalData, setModalData] = useState({});
 	// for table
 	const [page, setPage] = useState(1);
 	const rowsPerPage = 10;
@@ -99,13 +99,13 @@ export default function ReportImgPage() {
 
 	};
 	const viewOnClick = (item) => {
-		if(item.linkValue){
+		if (item.linkValue) {
 
 			onOpen();
 			setModalData(item)
 		}
-			
-    };
+
+	};
 	const renderCell = useCallback((dataItem, columnKey) => {
 		const cellValue = dataItem[columnKey];
 
@@ -135,21 +135,32 @@ export default function ReportImgPage() {
 				return moment(cellValue).utcOffset('+07:00').format('HH:mm:ss, DD-MM-YYYY');
 			case "thumnal":
 				return (
-					<Image
-						isZoomed
-						width={240}
-						alt="lỗi link"
-						src={dataItem?.linkValue ?? ""}
-						onClick={() => viewOnClick(dataItem)}
-					>
-					</Image>
+					// <Image
+					// 	isZoomed
+					// 	width={240}
+					// 	alt="lỗi link"
+					// 	src={dataItem?.linkValue ?? ""}
+					// 	onClick={() => viewOnClick(dataItem)}
+					// >
+					// </Image>
+					<div className="relative flex items-center  gap-5">
+						<Tooltip content="Xem chi tiết hình ảnh">
+							<Link href={dataItem?.linkValue ?? ""}>
+								<span className="text-lg text-default-400 cursor-pointer active:opacity-50"
+								>
+									<EyeIcon />
+								</span>
+							</Link>
+						</Tooltip>
+
+					</div>
 				)
 
 			default:
 				return cellValue;
 		}
 	}, []);
-	
+
 	return (
 		<div>
 
@@ -224,7 +235,7 @@ export default function ReportImgPage() {
 							<ModalHeader className="flex flex-col gap-1">Chi tiết hình ảnh</ModalHeader>
 							<ModalBody>
 								<Image
-									 width={1000}
+									width={1000}
 									alt="lỗi link"
 									src={modalData?.linkValue ?? ""}
 								>
