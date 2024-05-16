@@ -78,6 +78,22 @@ class StudentController {
             return next(createError.InternalServerError());
         }
     }
+    static async createStudents(req, res, next) {
+        try {
+            const student = await StudentService.createMultipleStudents(req.body);
+            if (!student) {
+                return next(createError.InternalServerError());
+            }
+            return res.status(200).json({
+                status: 200,
+                message: "done",
+                data: student
+            });
+        } catch (error) {
+            console.log(error);
+            return next(createError.InternalServerError());
+        }
+    }
     static async updateStudent(req, res, next) {
         try {
 

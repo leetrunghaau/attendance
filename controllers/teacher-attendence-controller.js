@@ -5,7 +5,7 @@ const TeacherService = require('../services/teacher-service');
 const TeacherAttendenceService = require('../services/teacher-attdence-service');
 const moment = require('moment');
 const ScheduleItemService = require('../services/schedule-item-service');
-const { subtractMinutes } = require('../helper/generate-key');
+const { subtractMinutes, time1thanTime2 } = require('../helper/generate-key');
 async function updateAttendances(listUpdate) {
     listUpdate.forEach(async (item) => {
         if (item) {
@@ -52,7 +52,7 @@ class TeacherAttendenceController {
                         checkinTime: null,
                         checkoutTime: null
                     }
-                    if (item.Lesson.timeStart < currentTime && item.Lesson.timeEnd > currentTime) {
+                    if (time1thanTime2(currentTime, item.Lesson.timeStart) && time1thanTime2(item.Lesson.timeEnd, currentTime)) {
                         if (item.Schedule.classRoomId == driver.classRoomId) { // check vào có đúng lớp hay không
                             if (subtractMinutes(currentTime, item.Lesson.timeStart) <= 5) {
                                 atten.attendenceStatus = "Hiện diện";
@@ -66,7 +66,7 @@ class TeacherAttendenceController {
                         } else {
                             atten.attendenceStatus = "Không đúng lớp";
                         }
-                    } else if (item.Lesson.timeEnd <= currentTime) {
+                    } else if (time1thanTime2(currentTime, item.Lesson.timeEnd)) {
                         atten.attendenceStatus = "Vắng";
                     } else {
                         atten.attendenceStatus = "Hiện diện";
@@ -88,10 +88,10 @@ class TeacherAttendenceController {
                         checkoutTime: item.checkoutTime
                     };
                     let updateFlat = false;
-                    if (item.ScheduleItem.Lesson.timeStart >= currentTime) {
+                    if (time1thanTime2(item.ScheduleItem.Lesson.timeStart , currentTime) ) {
                         atten.attendenceStatus = "Hiện diện";
                         updateFlat = true;
-                    } else if (item.ScheduleItem.Lesson.timeStart < currentTime && item.ScheduleItem.Lesson.timeEnd > currentTime) {
+                    } else if (time1thanTime2(currentTime, item.ScheduleItem.Lesson.timeStart) && time1thanTime2(item.ScheduleItem.Lesson.timeEnd, currentTime)) {
                         if (item.checkinTime != null) { // có vào lớp tiết này thì ra lớp chắc chắn ra lớp phải là tiết này  (vì đang vào cùng tiết)
                             if (!item.checkoutTime) {
                                 // throw new Error('trong một tiết có đi vô, không thấy đia ra và đang đi vô (magic)');
@@ -104,7 +104,7 @@ class TeacherAttendenceController {
                                     updateFlat = true;
                                 } else {
                                     // vào trễ cúp giũa tiết và vào lớp
-                                    atten.attendenceStatus = "vào trễ, cúp tiết";
+                                    atten.attendenceStatus = "vào trễ, bỏ tiết";
                                     atten.checkinTime = currentTime;
                                     updateFlat = true;
                                 }
@@ -202,10 +202,10 @@ class TeacherAttendenceController {
                     checkoutTime: item.checkoutTime
                 };
                 let updateFlat = false;
-                if (item.ScheduleItem.Lesson.timeStart >= currentTime) {
+                if (time1thanTime2(item.ScheduleItem.Lesson.timeStart, currentTime)) {
                     atten.attendenceStatus = "Vắng";
                     updateFlat = true;
-                } else if (item.ScheduleItem.Lesson.timeStart < currentTime && item.ScheduleItem.Lesson.timeEnd > currentTime) {
+                } else if (time1thanTime2(currentTime, item.ScheduleItem.Lesson.timeStart) && time1thanTime2(item.ScheduleItem.Lesson.timeEnd, currentTime)) {
                     if (subtractMinutes(item.ScheduleItem.Lesson.timeEnd, currentTime) > 5) {
                         atten.attendenceStatus = atten.attendenceStatus + " + ra tiết sớm";
                         atten.checkoutTime = currentTime;

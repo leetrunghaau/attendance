@@ -19,7 +19,12 @@ class StudentService {
     studentData.studentId = generateHSId()
     return Student.create(studentData);
   }
-
+  static async createMultipleStudents(studentDataArray) {
+    const generatedIds = studentDataArray.map(data => {
+      return { ...data, studentId: generateHSId() };
+    });
+    return Student.bulkCreate(generatedIds);
+  }
   static async updateStudent(studentId, studentData) {
     await Student.update(studentData, {
       where: { studentId: studentId },

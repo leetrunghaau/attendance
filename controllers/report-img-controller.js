@@ -4,6 +4,7 @@ const DriverService = require("../services/driver-service");
 const multer = require('multer');
 const ImgLinkService = require('../services/img-link-service');
 const moment = require('moment');
+const ClassRoomService = require('../services/class-room-service');
 
 
 
@@ -13,8 +14,17 @@ class ReportImgController {
 
     static async uploadImg(req, res, next) {
         try {
-            let updateParam = req.body;
-            updateParam.imgTime = moment().utcOffset('+07:00');
+
+            const driver = await DriverService.getDriverById(req.body.driverId)
+            if (!driver) {
+                return next(createError.BadRequest("không tìm thấy driver"))
+            }
+            let updateParam = {
+                linkValue: req.body.linkValue,
+                imgStatus: req.body.imgStatus,
+                imgTime: moment().utcOffset('+07:00'),
+                classRoomId: driver.classRoomId ?? null
+            };
             const img_link = await ImgLinkService.createImgLink(updateParam);
             if (!img_link) {
                 return next(createError.InternalServerError("không up được data"))

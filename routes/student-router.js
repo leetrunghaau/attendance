@@ -8,6 +8,7 @@ router.get("/students/classRoomId/:classRoomId", StudentController.getStudentByC
 router.get("/student/:studentId", StudentController.getStudentById);
 router.get("/students", StudentController.getAllStudent);
 router.post("/student", StudentController.createStudent);
+router.post("/students", StudentController.createStudents);
 router.put("/student", StudentController.updateStudent);
 router.delete("/student/:studentId", StudentController.deleteStudentById);
 module.exports = router;
