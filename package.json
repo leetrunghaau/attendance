@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start -p 6000",
+    "start": "next start",
     "lint": "next lint"
   },
   "dependencies": {
@@ -50,6 +50,7 @@
     "react-toastify": "^10.0.5",
     "tailwind-variants": "^0.1.18",
     "tailwindcss": "3.3.5",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "xlsx": "^0.18.5"
   }
 }
