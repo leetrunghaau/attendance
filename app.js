@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 var cors = require('cors')
+const path = require('path');
 const app = express();
 // Load environment variables from .env file
 dotenv.config();
@@ -8,7 +9,7 @@ dotenv.config();
 // Parse JSON body
 app.use(express.json());
 // app.use(bodyParser.json());
-
+app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 const apiRoutes = require('./routes/index');
 const { errorMiddleware } = require('./middlewares/error-middleweara');

@@ -12,6 +12,7 @@ const scheduleItemRouter = require('./schedule-item-router')
 const studentAttendenceRouter = require('./student-attdence-router')
 const teacherAttendenceRouter = require('./teacher-attdence-router')
 const reportAttendenceRouter = require('./report-attdence-router')
+const reportImgRouter = require('./report-img-router')
 const testR = require('./test-router')
 
 
@@ -26,5 +27,6 @@ router.use(scheduleItemRouter);
 router.use(studentAttendenceRouter);
 router.use(teacherAttendenceRouter);
 router.use(reportAttendenceRouter);
+router.use(reportImgRouter);
 router.use(testR);
 module.exports = router;

@@ -127,4 +127,19 @@ Content-Type: application/json
 }
 
 ### get 1 student 
-GET  http://localhost:8080/api/schedule/e0b8a4c75e020db703
+POST   http://localhost:8080/api/uploadImg
+Content-Type: application/json
+
+{
+    "linkValue": "https://images2.thanhnien.vn/zoom/328_205/528068263637045248/2024/4/23/h1-1713758513228565995478-0-82-967-1629-crop-17138413199221229012940.jpg",
+    "imgStatus": "đánh nhau",
+    "classRoomId": "LOP_SWV-yln-176"
+}
+
+### get 1 student 
+GET    http://localhost:8080/api/classRooms
+Content-Type: application/json
+
+{
+    
+}
