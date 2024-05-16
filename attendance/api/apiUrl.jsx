@@ -61,5 +61,9 @@ export const URL_API = {
     TEACCHER: BASE_URL+"/api/reportAttendenceTeacher",
     
   },
+  REPORT_IMG:{
+    GETS: BASE_URL + "/api/imgLinks/"
+  }
+
     
 };

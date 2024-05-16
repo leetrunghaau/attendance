@@ -31,6 +31,10 @@ export const siteConfig = {
 		{
 			label: "Thời khóa biểu",
 			href: "/schedule",
+		},
+		{
+			label: "Bạo lực học đường",
+			href: "/reportImg",
 		}
 
 	],
