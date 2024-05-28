@@ -32,7 +32,7 @@ const User = db.define('User', {
 
 
 }, {
-  tableName: 'user',
+  tableName: 'teacher',
   timestamps: false
 });
 
